@@ -1,7 +1,26 @@
 <script setup>
-defineProps({
-  msg: {
+import TimeCounter from './TimeCounter.vue';
+import WaterCounter from './WaterCounter.vue';
+
+const props= defineProps({
+  droplets: {
+    type: Number,
+    required: true
+  },
+  timeLeft: {
+    type: Number,
+    required: true
+  },
+  content: {
     type: String,
+    required: true
+  },
+  creationDate: {
+    type: String,
+    required: true
+  },
+  totalWatering: {
+    type: Number,
     required: true
   }
 })
@@ -9,21 +28,53 @@ defineProps({
 
 <template>
   <div class="post">
-    <h1 class="green">{{ msg }}</h1>
-    <h3>
-      You’ve successfully created a project with
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>.
-    </h3>
+    <div class="top">
+      <TimeCounter :time="props.timeLeft" class="top-left"></TimeCounter>
+      <WaterCounter :droplets="props.droplets" class="top-right"></WaterCounter>
+    </div>
+    <div class="middle">
+      <p>{{props.content}}</p>
+    </div>
+    <div class="bottom">
+      <p class="bottom-left">arrosé {{props.totalWatering}} fois</p>
+      <p class="bottom-right">crée le {{props.creationDate}}</p>
+    </div>
   </div>
 </template>
 
 <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
+.post {
   position: relative;
-  top: -10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid black;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  height: 200px; /* Adjust as needed */
+  width: 200px; /* Adjust as needed */
 }
-
+.top-left, .top-right, .bottom-left, .bottom-right {
+  position: absolute;
+}
+.top-left {
+  top: 0;
+  left: 0;
+}
+.top-right {
+  top: 0;
+  right: 0;
+}
+.bottom-left {
+  font-size: 0.8rem;
+  bottom: 0;
+  left: 0;
+}
+.bottom-right {
+  font-size: 0.8rem;
+  bottom: 0;
+  right: 0;
+}
 </style>
