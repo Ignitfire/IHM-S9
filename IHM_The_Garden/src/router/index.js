@@ -16,15 +16,15 @@ const router = createRouter({
       component: () => import('../views/GardenView.vue')
     },
     {
-      path: '/chat/',
-      name: 'mainChat',
-      component: () => import('../views/ChatView.vue')
+      path: '/thread/',
+      name: 'mainThread',
+      component: () => import('../views/ThreadView.vue')
     },
     {
-      path: '/chat/:username',
-      name: 'chatWithUser',
+      path: '/thread/:username',
+      name: 'threadWithUser',
       props: true,
-      component: () => import('../views/ChatView.vue')
+      component: () => import('../views/ThreadView.vue')
     },
   ]
 });

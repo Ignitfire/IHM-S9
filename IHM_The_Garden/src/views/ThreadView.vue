@@ -4,16 +4,20 @@ import TheWelcome from '../components/TheWelcome.vue'
 import WaterCounter from '@/components/WaterCounter.vue';
 import Post from '@/components/Post.vue';
 import Garden from '@/components/Garden.vue';
-import Thread from '@/components/Thread.vue';
 import RoutingButton from '@/components/RoutingButton.vue';
+import Thread from '@/components/Thread.vue';
 </script>
 
 <template>
   <main class="container">
+    <!-- <TheWelcome /> -->
+    <!-- <Post :timeLeft="86400" :droplets="10" :content="`I'm a post`" :creationDate="`2021-10-10`" :totalWatering="10"/> -->
+    <!-- <TimeCounter :time="86400"/> -->
+    <!-- <Garden :UserID="1"/> -->
     <div class="navbar">    
-      <RoutingButton :path="'/thread/'" size="small" shape="square"/>
+      <RoutingButton :path="'/'"/>
     </div>
-    <Garden :UserID="1"/>
+    <Thread :UserID="1" :RecipientID="2"/>
   </main>
 </template>
 
@@ -30,7 +34,7 @@ import RoutingButton from '@/components/RoutingButton.vue';
   /* Ajoutez vos styles de navbar ici */
 }
 
-.garden {
+.thread {
   width: 90%;
   height: 100%;
   /* Ajoutez vos styles de thread ici */

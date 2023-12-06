@@ -53,8 +53,8 @@ const props= defineProps({
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 0.5rem;
-  height: 200px; /* Adjust as needed */
-  width: 200px; /* Adjust as needed */
+  height: 20vh; /* Adjust as needed */
+  width: 20vh; /* Adjust as needed */
 }
 .top-left, .top-right, .bottom-left, .bottom-right {
   position: absolute;

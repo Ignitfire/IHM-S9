@@ -1,17 +1,23 @@
 <script setup>
+import { usePostStore } from '../stores/posts'
 import Post from './Post.vue';
+import { computed } from 'vue';
+
 
 const props = defineProps({
-  posts: {
-    type: Array,
+  UserID: {
+    type: Number,
     required: true
   }
 })
+
+const store = usePostStore()
+const userPosts = computed(() => store.getPostsByUser(props.UserID))
 </script>
 
 <template>
   <div class="garden">
-    <Post v-for="post in props.posts" :key="post.id" v-bind="post" />
+    <Post v-for="post in userPosts" :key="post.postID" v-bind="post" :style="{ gridArea: `${post.location.y + 1} / ${post.location.x + 1}` }" />
   </div>
 </template>
 
@@ -24,5 +30,7 @@ const props = defineProps({
   width: 80%;
   height: 100vh;
   margin: 0 auto;
+  background-color: lightgreen;
 }
+
 </style>
