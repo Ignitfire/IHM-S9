@@ -7,9 +7,11 @@ import Thread from '@/components/Thread.vue';
 import RoutingButton from '@/components/RoutingButton.vue';
 import { useUserStore } from '../stores/users';
 import ActionButton from '@/components/ActionButton.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, VueElement } from 'vue';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
+import { onBeforeUnmount } from 'vue';
+import PanelAndModals from '@/components/PanelAndModals.vue';
 
 const route = useRoute();
 const store = useUserStore();
@@ -24,6 +26,12 @@ watchEffect(async () => {
     User.value = store.getLocalUser();
   }
 });
+
+const isPanelOpen = ref(false);
+
+const togglePanel = () => {
+  isPanelOpen.value = !isPanelOpen.value;
+};
 </script>
 
 <template>
@@ -34,7 +42,8 @@ watchEffect(async () => {
       </div>
       <div class = "mediumButtons">
         <RoutingButton type="home" size="medium" path="/thread/"/>
-        <ActionButton type="contacts" size="medium"/>
+        <ActionButton type="contacts" size="medium" :action="togglePanel"/>
+        <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
       </div>
       <RoutingButton type="garden" size="big" path="/"/>
     </div>
@@ -47,6 +56,7 @@ watchEffect(async () => {
   display: flex;
   height: 100vh;
   width: 100vw;
+  position: relative;
 }
 
 .navbar {

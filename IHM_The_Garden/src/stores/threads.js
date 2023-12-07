@@ -20,8 +20,5 @@ export const useThreadStore = defineStore({
   },
   actions: {
     // console log pour tester
-    printThreads: (state) => console.log(state.threads),
-    printThreadsByUser: (state, userID) => console.log(state.threads.filter(thread => thread.senderID === userID || thread.recipientID === userID)),
-    printThread: (state, senderID, recipientID) => console.log(state.threads.filter(thread => (thread.senderID === senderID && thread.recipientID === recipientID) || (thread.senderID === recipientID && thread.recipientID === senderID)))
-  }
+     }
 })

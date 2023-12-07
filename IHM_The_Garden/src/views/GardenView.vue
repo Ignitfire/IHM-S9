@@ -7,9 +7,13 @@ import Thread from '@/components/Thread.vue';
 import RoutingButton from '@/components/RoutingButton.vue';
 import { useUserStore } from '../stores/users';
 import ActionButton from '@/components/ActionButton.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, VueElement } from 'vue';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
+import { onBeforeUnmount } from 'vue';
+import PanelAndModals from '@/components/PanelAndModals.vue';
+
+
 
 const route = useRoute();
 const store = useUserStore();
@@ -31,18 +35,6 @@ const togglePanel = () => {
   isPanelOpen.value = !isPanelOpen.value;
 };
 
-const isModalOpen = ref(false);
-const selectedUser = ref(null);
-
-const openModal = (userID) => {
-  selectedUser.value = userID;
-  isModalOpen.value = true;
-};
-
-const closeModal = () => {
-  isModalOpen.value = false;
-  selectedUser.value = null; // Réinitialisez l'utilisateur sélectionné lorsque la modale est fermée
-};
 </script>
 
 <template>
@@ -71,20 +63,9 @@ const closeModal = () => {
       <div class = "mediumButtons">
         <RoutingButton type="home" size="medium" path="/"/>
         <ActionButton type="contacts" size="medium" :action="togglePanel"/>
-        <div class="contactContainer">
-          <div v-if="isPanelOpen" class="panel">
-            <div v-for="userID in User.Following" :key="userID">
-              <button @click="openModal(userID)">
-                {{ userID }}
-              </button>
-              <div v-if="isModalOpen && selectedUser.value === userID" class="modal">
-                <!-- La modale ne s'ouvre que si l'utilisateur sélectionné correspond à cet ID d'utilisateur -->
-                <button @click="closeModal">Fermer</button>
-                <button>Autre action</button>
-              </div>
-            </div>
-          </div>
-        </div>
+        <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
+
+
       </div>
       <RoutingButton type="thread" size="big" path="/thread/"/>
     </div>
@@ -98,32 +79,6 @@ const closeModal = () => {
   height: 100vh;
   width: 100vw;
   position: relative;
-}
-
-.modal{
-  position: relative;
-  top: 0;
-  left: 0;
-  background-color: rgba(0,0,0,0.5);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-}
-.panel{
-  position: absolute;
-  top: 0;
-  left: 15%;
-  width: 10rem;
-  height: 10rem;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 0.5rem;
-  padding: 1rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }
 
 .navbar {
