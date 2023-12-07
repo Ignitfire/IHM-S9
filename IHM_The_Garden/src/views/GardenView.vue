@@ -88,7 +88,7 @@ const closeModal = () => {
       </div>
       <RoutingButton type="thread" size="big" path="/thread/"/>
     </div>
-    <Garden :UserID="User.UserID"/>  
+    <Garden :UserID="User.UserID"/>
     </main>
 </template>
 
