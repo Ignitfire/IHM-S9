@@ -7,7 +7,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: GardenView
+      component: () => import('../views/GardenView.vue')
     },
     {
       path: '/garden/:username',

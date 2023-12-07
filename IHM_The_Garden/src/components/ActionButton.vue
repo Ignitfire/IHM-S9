@@ -10,43 +10,42 @@ const props = defineProps({
     type: String,
     default: 'small'
   },
-  path: {
-    type: String,
-    default: '/'
+  action: {
+    type: Function,
+    default: () => {}
   }
 })
 
+const buttonProps = computed(() => {
 let icon='';
 let color='';
 
 switch (props.type) {
-  case 'garden': {
-    icon = '/icons/icon_garden.png';
-    color = 'green';
+  case 'settings': {
+    icon = '/icons/icon_settings.png';
+    color = 'grey';
     break;
   }
-  case 'thread': {
-    icon = '/icons/icon_thread.png';
-    color = 'green';
+  case 'send': {
+    icon = '/icons/icon_send.png';
+    color = 'blue';
     break;
   }
-  case 'home': {
-    icon = '/icons/icon_home.png';
+  case 'contacts': {
+    icon = '/icons/icon_openContacts.png';
     color = 'yellow';
     break;
   }
 }
+return {icon, color}
+})
 </script>
 
 
 <template>
-  <div class="button">
-  <router-link :to="props.path">
-    <button :class="['button',color, props.size]">
-      <img v-if="icon" :src="icon" class="button-icon" />
+    <button :class="['button',buttonProps.color, props.size]" @click="props.action"> 
+      <img v-if="buttonProps.icon" :src="buttonProps.icon" class="button-icon" />
     </button>
-  </router-link>
-  </div>
 </template>
 
 <style scoped>

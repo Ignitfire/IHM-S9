@@ -1,17 +1,12 @@
 <script setup>
-
+import { ref, watchEffect } from 'vue';
 import { useThreadStore } from '../stores/threads'
 import { usePostStore } from '../stores/posts'
+import { useUserStore } from '../stores/users'
 import Post from './Post.vue';
-import { computed } from 'vue';
-
 
 const props = defineProps({
   UserID: {
-    type: Number,
-    required: true
-  },
-  RecipientID: {
     type: Number,
     required: true
   }
@@ -19,21 +14,34 @@ const props = defineProps({
 
 const Threadstore = useThreadStore()
 const PostStore = usePostStore()
-const threads = computed(() => Threadstore.getThread(props.UserID, props.RecipientID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate)))
-console.log(threads.value)
-const threadPosts = computed(() => {
-  const posts = []
-  for (const thread of threads.value) {
-    console.log(thread.postID)
-    posts.push(PostStore.getPostByID(thread.postID))
+const UserStore = useUserStore()
+
+const threadPosts = ref(null);
+const localUser = UserStore.getLocalUser();
+
+watchEffect(() => {
+  if (props.UserID!=localUser.UserID) {
+    // Si SenderID est spécifié, threadPosts est égal aux posts présents dans threads
+    const threads = Threadstore.getThread(localUser.UserID, props.UserID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
+    threadPosts.value = threads.map(thread => PostStore.getPostByID(thread.postID));
+  } else {
+    // Si SenderID n'est pas spécifié, threadPosts est égal aux posts présents dans les utilisateurs correspondant aux ID de following
+    const following = UserStore.getFollowingByID(props.UserID);
+    const posts = [];
+    for (const userID of following) {
+      posts.push(...PostStore.getPostsByUser(userID));
+    }
+    // Trie les posts par date de création
+    posts.sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate));
+    threadPosts.value = posts;
   }
-  return posts
-})
+});
 </script>
 
 <template>
-  <div class="thread">
+  <div v-if="threadPosts" class="thread">
     <div v-for="post in threadPosts" :key="post.postID">
+      <h2 v-bind="post">Crée par {{post.userID}} Envoyé par {{ props.UserID }}</h2>
       <Post v-bind="post" />
       <p>Envoyé le {{ new Date(post.sentDate).toLocaleDateString() }}</p>
     </div>

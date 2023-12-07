@@ -3,22 +3,42 @@ import TimeCounter from '@/components/TimeCounter.vue';
 import WaterCounter from '@/components/WaterCounter.vue';
 import Post from '@/components/Post.vue';
 import Garden from '@/components/Garden.vue';
-import RoutingButton from '@/components/RoutingButton.vue';
 import Thread from '@/components/Thread.vue';
+import RoutingButton from '@/components/RoutingButton.vue';
+import { useUserStore } from '../stores/users';
+import ActionButton from '@/components/ActionButton.vue';
+import { ref, onMounted } from 'vue';
+import { watchEffect } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+const store = useUserStore();
+
+const User = ref(null);
+
+watchEffect(async () => {
+  const targetUserName = route.params.username;
+  if (targetUserName) {
+    User.value = store.getUserByName(targetUserName);
+  } else {
+    User.value = store.getLocalUser();
+  }
+});
 </script>
 
 <template>
-  <main class="container">
+  <main v-if="User" class="container">
     <div class="navbar">
       <div class="top">
 
       </div>
       <div class = "mediumButtons">
         <RoutingButton type="home" size="medium" path="/thread/"/>
+        <ActionButton type="contacts" size="medium"/>
       </div>
       <RoutingButton type="garden" size="big" path="/"/>
     </div>
-    <Thread :UserID="1" :RecipientID="2"/>
+    <Thread :UserID="User.UserID"/>
   </main>
 </template>
 
