@@ -21,11 +21,11 @@ const localUser = UserStore.getLocalUser();
 
 watchEffect(() => {
   if (props.UserID!=localUser.UserID) {
-    // Si SenderID est spécifié, threadPosts est égal aux posts présents dans threads
+    // Si UserID est spécifié, threadPosts est égal aux posts présents dans threads
     const threads = Threadstore.getThread(localUser.UserID, props.UserID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
     threadPosts.value = threads.map(thread => PostStore.getPostByID(thread.postID));
   } else {
-    // Si SenderID n'est pas spécifié, threadPosts est égal aux posts présents dans les utilisateurs correspondant aux ID de following
+    // Si UserID n'est pas spécifié, threadPosts est égal aux posts présents dans les utilisateurs correspondant aux ID de following
     const following = UserStore.getFollowingByID(props.UserID);
     const posts = [];
     for (const userID of following) {
