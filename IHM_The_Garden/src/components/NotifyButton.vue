@@ -10,9 +10,9 @@ const props = defineProps({
     type: String,
     default: 'small'
   },
-  path: {
-    type: String,
-    default: '/'
+  action: {
+    type: Function,
+    default: () => {}
   }
 })
 
@@ -20,21 +20,17 @@ let icon='';
 let color='';
 
 switch (props.type) {
-  case 'garden': {
-    icon = '/icons/icon_garden.png';
-    color = 'green';
+  case 'sprinkle': {
+    icon = '/icons/icon_sprinkle.png';
+    color = 'blue';
     break;
   }
-  case 'thread': {
-    icon = '/icons/icon_thread.png';
-    color = 'green';
-    break;
-  }
-  case 'home': {
-    icon = '/icons/icon_home.png';
+  case 'addUser': {
+    icon = '/icons/icon_addUser.png';
     color = 'yellow';
     break;
   }
+  // remove user?
 }
 </script>
 

@@ -26,7 +26,7 @@ const userPosts = computed(() => store.getPostsByUser(props.UserID))
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(4, 1fr);
-  grid-gap: 1rem;
+  padding: 2rem;
   width: 80%;
   height: 100vh;
   margin: 0 auto;

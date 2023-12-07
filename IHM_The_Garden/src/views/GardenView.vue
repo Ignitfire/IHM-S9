@@ -1,6 +1,5 @@
 <script setup>
 import TimeCounter from '@/components/TimeCounter.vue';
-import TheWelcome from '../components/TheWelcome.vue'
 import WaterCounter from '@/components/WaterCounter.vue';
 import Post from '@/components/Post.vue';
 import Garden from '@/components/Garden.vue';
@@ -10,8 +9,15 @@ import RoutingButton from '@/components/RoutingButton.vue';
 
 <template>
   <main class="container">
-    <div class="navbar">    
-      <RoutingButton :path="'/thread/'" size="small" shape="square"/>
+    <div class="navbar">
+      <div class="top">
+
+      </div>
+      <div class = "mediumButtons">
+        <RoutingButton type="home" size="medium" path="/"/>
+        <RoutingButton type="garden" size="medium" path="/thread/"/>
+      </div>
+      <RoutingButton type="thread" size="big" path="/thread/"/>
     </div>
     <Garden :UserID="1"/>
   </main>
@@ -25,14 +31,32 @@ import RoutingButton from '@/components/RoutingButton.vue';
 }
 
 .navbar {
-  width: 10%;
+  display: flex;
+  flex-direction: column;
+  width: 15%;
   height: 100%;
+  justify-content: center;
+
   /* Ajoutez vos styles de navbar ici */
 }
 
 .garden {
-  width: 90%;
+  width: 85%;
   height: 100%;
   /* Ajoutez vos styles de thread ici */
+}
+
+.mediumButtons{
+  display: flex;
+  flex-direction: line;
+  justify-content: space-around;
+  height: 5rem;
+}
+
+.top{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  height: 90%;
 }
 </style>

@@ -49,10 +49,10 @@ const props= defineProps({
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 0.5rem;
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 0.5rem;
+  margin: 0.5rem 1rem;
   height: 20vh; /* Adjust as needed */
   width: 20vh; /* Adjust as needed */
 }
