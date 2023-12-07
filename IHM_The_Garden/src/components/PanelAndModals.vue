@@ -2,8 +2,8 @@
     <div>
       <div v-if="isPanelOpen" class="panel" ref="panelRef">
         <div v-for="userID in User.Following" :key="userID" class="user-button">
-          <button @click="openModal(userID)">
-            {{ userID }}
+          <button class="modal-button" @click="openModal(userID)">
+            User{{ userID }}
           </button>
           <div v-if="isModalOpen[userID]" class="modal" :ref="el => { if (el) modalRefs[userID] = el }">
             <RoutingButton type="thread" size="small" :path="'/thread/User' + userID" @click="closeModalAndPanel(userID)"/>
@@ -57,7 +57,7 @@
   
         Object.keys(modalRefs.value).forEach((userID) => {
           let modal = modalRefs.value[userID];
-          if (props.isModalOpen.value[userID] && !modal.contains(mouseup)) {
+          if (isModalOpen.value[userID] && !modal.contains(mouseup)) {
             closeModal(userID);
           }
         });
@@ -95,8 +95,8 @@
   position: absolute;
   display: flex;
   flex-direction: row;
-  top : -0.1rem;
-  right: -50px; /* Positionne la modale à 50px à droite du bouton */
+  top : -0.8rem;
+  right: -6rem; /* Positionne la modale à 50px à droite du bouton */
   background-color:bisque;
   /* autres styles */
 }
@@ -104,7 +104,7 @@
   position: absolute;
   top: 0;
   left: 15%;
-  width: 10rem;
+  width: 8rem;
   height: 10rem;
   background-color: white;
   opacity: 1;
@@ -119,6 +119,10 @@
 
 .user-button {
   position: relative;
+}
+
+.modal-button{
+  width: 6rem;
 }
 </style>
   

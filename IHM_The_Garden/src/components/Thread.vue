@@ -23,7 +23,11 @@ watchEffect(() => {
   if (props.UserID!=localUser.UserID) {
     // Si UserID est spécifié, threadPosts est égal aux posts présents dans threads
     const threads = Threadstore.getThread(localUser.UserID, props.UserID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
-    threadPosts.value = threads.map(thread => PostStore.getPostByID(thread.postID));
+    threadPosts.value = threads.map(thread => {
+      const post = PostStore.getPostByID(thread.postID);
+      post.sentDate = thread.sentDate; // Ajoutez la sentDate au post
+      return post;
+    });
   } else {
     // Si UserID n'est pas spécifié, threadPosts est égal aux posts présents dans les utilisateurs correspondant aux ID de following
     const following = UserStore.getFollowingByID(props.UserID);
@@ -41,9 +45,9 @@ watchEffect(() => {
 <template>
   <div v-if="threadPosts" class="thread">
     <div v-for="post in threadPosts" :key="post.postID">
-      <h2 v-bind="post">Crée par {{post.userID}} Envoyé par {{ props.UserID }}</h2>
+      <h2>Crée par {{post.userID}} Envoyé par {{ props.UserID }}</h2>
       <Post v-bind="post" />
-      <p>Envoyé le {{ new Date(post.sentDate).toLocaleDateString() }}</p>
+      <p>Envoyé le {{post.sentDate }}</p>
     </div>
   </div>
 </template>

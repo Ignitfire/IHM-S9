@@ -1,5 +1,12 @@
 import { defineStore } from 'pinia'
 
+function getRandomDate() {
+  const start = new Date(2000, 0, 1);
+  const end = new Date();
+  const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return `${randomDate.getDate()}-${randomDate.getMonth() + 1}-${randomDate.getFullYear()}`;
+}
+
 export const useThreadStore = defineStore({
   id: 'threads',
   state: () => ({
@@ -7,7 +14,7 @@ export const useThreadStore = defineStore({
       postID: i + 1,
       senderID: Math.floor(Math.random() * 10), // Simule 10 envoyeurs
       recipientID: Math.floor(Math.random() * 10), // Simule 10 destinataires
-      sentDate: new Date().toISOString(), // Ajoute une date d'envoi pour chaque thread
+      sentDate: getRandomDate(), // Ajoute une date d'envoi pour chaque thread
     })),
   }),
   getters: {
@@ -16,6 +23,9 @@ export const useThreadStore = defineStore({
     },
     getThread: (state) => (senderID, recipientID) => {
       return state.threads.filter(thread => (thread.senderID === senderID && thread.recipientID === recipientID) || (thread.senderID === recipientID && thread.recipientID === senderID))
+    },
+    getThreadByPostID: (state) => (postID) => {
+      return state.threads.find(thread => thread.postID === postID)
     }
   },
   actions: {
