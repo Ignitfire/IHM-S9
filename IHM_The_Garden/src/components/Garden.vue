@@ -75,7 +75,8 @@ const postVisualizationToggle = (payload) => {
 }
 
 .visualizationModal {
-  position: absolute;
+  position: fixed;
+  z-index: 2;
   top: 0;
   bottom: 0;
   width: 35%;
@@ -86,7 +87,7 @@ const postVisualizationToggle = (payload) => {
 }
 
 .left-side{
-  left: 0;
+  left: 15vw;
 }
 
 .right-side{

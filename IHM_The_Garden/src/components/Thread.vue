@@ -62,48 +62,45 @@ const toggleSide = () => {
 
 onMounted(() => {
   gsap.registerPlugin(ScrollTrigger);
-  const tlRightLeft = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".post-sent-container",
-      start: "top 100%",
-      end: "bottom 0%",
-      scrub: true
-    },
-  });
+  const thread = document.querySelector('.thread');
 
-  tlRightLeft.from(".post-sent-container", {
-    x: "100%"
-  })
-    .to(".post-sent-container", {
-      x: "40%",
-      onComplete: toggleSide
-    })
-    .to(".post-sent-container", {
-      x: "0%"
+  const parentWidth = thread.offsetWidth;
+
+
+  const posts = document.querySelectorAll(".post-sent-container");
+
+  posts.forEach((post) =>{
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: post,
+        start: "top 100%",
+        end: "bottom 0%",
+        scrub: true,
+      },
     });
 
-  const tlLeftRight = gsap.timeline({
-    scrollTrigger: {
-      trigger: ".post-sent-container",
-      start: "top 100%",
-      end: "bottom 0%",
-      scrub: true,
-    },
+    tl
+      .to(post, {
+        x: -parentWidth * 0.45,
+        onComplete: toggleSide
+      })
+      .to(post, {
+        x: -parentWidth * 0.8,
+      })
+      .to(post, {
+        x: -parentWidth * 0.4,
+        onComplete: toggleSide
+      })
+      .to(post, {
+        x: 0
+      });
   });
-
-  tlLeftRight.to(".post-sent-container", {
-    x: "40%",
-    onComplete: toggleSide
-  })
-    .to(".post-sent-container", {
-      x: "100%"
-    });
-    
 });
 </script>
 
 <template>
-  <div v-if="threadPosts" class="thread">
+  
+  <div class="container">
     <div id="visualization">
       <div 
       v-if="visualizedPost !== null && !isLeftSide"
@@ -122,6 +119,7 @@ onMounted(() => {
       />
     </div>
     </div>
+  <div v-if="threadPosts" class="thread">
     <div class="post-sent-container" v-for="post in threadPosts" :key="post.postID">
       <h2>Crée par {{post.userID}} Envoyé par {{ props.UserID }}</h2>
       <Post 
@@ -132,21 +130,31 @@ onMounted(() => {
       <p>Envoyé le {{post.sentDate }}</p>
     </div>
   </div>
+  </div>
 </template>
 
 <style scoped>
+
+.container {
+  width: 85%;
+}
 .thread {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: end;
   gap: 1rem;
-  width: 80ex;
+  width: 100%;
   margin: 0 auto;
   background-color:  lightcyan;
 }
 
+.post-sent-container{
+  width: fit-content;
+}
+
 .visualizationModal {
-  position: absolute;
+  position: fixed;
+  z-index: 2;
   top: 0;
   bottom: 0;
   width: 35%;
@@ -157,7 +165,7 @@ onMounted(() => {
 }
 
 .left-side{
-  left: 0;
+  left: 15vw;
 }
 
 .right-side{

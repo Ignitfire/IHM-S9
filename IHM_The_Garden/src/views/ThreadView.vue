@@ -65,25 +65,23 @@ const togglePanel = () => {
 <style scoped>
 .container {
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  width: 100%;
   position: relative;
 }
 
 .navbar {
   display: flex;
   flex-direction: column;
-  width: 15%;
-  height: 100%;
+  width: 15vw;
+  height: 100vh;
   justify-content: center;
+  position: sticky;
+  left:0;
+  top:0;
+  bottom:0;
   /* Ajoutez vos styles de navbar ici */
 }
 
-.thread {
-  width: 85%;
-  height: 100%;
-  /* Ajoutez vos styles de thread ici */
-}
 
 .mediumButtons{
   display: flex;
