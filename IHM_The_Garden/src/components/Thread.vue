@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, ref, watchEffect } from 'vue';
+import { computed, onMounted, ref, watchEffect } from 'vue';
 import { useThreadStore } from '../stores/threads';
 import { usePostStore } from '../stores/posts';
 import { useUserStore } from '../stores/users';
@@ -45,11 +45,12 @@ watchEffect(() => {
 });
 
 const visualizedPost = ref(null);
-const isLeftSide = ref(null);
+const isLeftSideValue = ref(false);
+const isLeftSide = computed(() => isLeftSideValue);
 
 const postVisualizationToggle = (payload) => {
   if(visualizedPost.value === null){
-    isLeftSide.value = payload.isLeftSide;
+    isLeftSideValue.value = payload.isLeftSide;
     visualizedPost.value = PostStore.getPostByID(payload.postID);
   }else{
     visualizedPost.value = null;
@@ -57,7 +58,7 @@ const postVisualizationToggle = (payload) => {
 };
 
 const toggleSide = () => {
-  isLeftSide.value = !isLeftSide.value;
+  isLeftSideValue.value = !isLeftSideValue.value;
 };
 
 onMounted(() => {
@@ -138,6 +139,7 @@ onMounted(() => {
 .container {
   width: 85%;
 }
+
 .thread {
   display: flex;
   flex-direction: column;
