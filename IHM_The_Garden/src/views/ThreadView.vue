@@ -74,6 +74,7 @@ const togglePanel = () => {
   flex-direction: column;
   width: 15vw;
   height: 100vh;
+  background-color: transparent;
   justify-content: center;
   position: sticky;
   left:0;
