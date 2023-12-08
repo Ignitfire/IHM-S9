@@ -1,12 +1,9 @@
 <script setup>
-import { useRoute } from 'vue-router';
 import TimeCounter from './TimeCounter.vue';
 import WaterCounter from './WaterCounter.vue';
 import { onMounted, ref } from 'vue';
-import {gsap} from 'gsap';
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const route= useRoute();
+
 
 
 const props= defineProps({
@@ -43,61 +40,15 @@ const props= defineProps({
 
 const isLeftSide = ref(true);
 
-
-const toggleSide = () => {
-  isLeftSide.value = !isLeftSide.value;
-};
-
 onMounted(() => {
-  if (window.location.href.includes('/thread')){
-    gsap.registerPlugin(ScrollTrigger);
-    isLeftSide.value = false;
-
-    const tlRight = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.post',
-        start: 'top 100%',
-        end: 'center 50%',
-        scrub: true,
-        onUpdate: ({ progress }) => {
-          if (progress >= 0.6) {
-            toggleSide();
-          }
-        },
-      },
-    });
-
-    tlRight.from('.post', {
-      x: '100%',
-    });
-
-    tlRight.to('.post', {
-      x: '40%',
-    });
-
-    const tlLeft = gsap.timeline({
-      scrollTrigger: {
-        trigger: '.post',
-        start: 'center 50%',
-        end: 'bottom 0%',
-        scrub: true,
-        onUpdate: ({ progress }) => {
-          if (progress >= 0.4) {
-            toggleSide();
-          }
-        },
-      },
-    });
-
-    tlLeft.to('.post', {
-      x: '0%',
-    });
-  }else{
+  if (!window.location.href.includes('/thread')){
     if (props.location.x < 3) {
       isLeftSide.value = true;
     } else {
       isLeftSide.value = false;
     }
+  }else{
+    isLeftSide.value = false;
   }
 });
 </script>

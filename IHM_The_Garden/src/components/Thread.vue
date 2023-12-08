@@ -1,9 +1,12 @@
 <script setup>
-import { ref, watchEffect } from 'vue';
+import { onMounted, ref, watchEffect } from 'vue';
 import { useThreadStore } from '../stores/threads';
 import { usePostStore } from '../stores/posts';
 import { useUserStore } from '../stores/users';
 import Post from './Post.vue';
+import PostVisualization from './PostVisualization.vue';
+import {gsap} from 'gsap';
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const props = defineProps({
   UserID: {
@@ -40,6 +43,63 @@ watchEffect(() => {
     threadPosts.value = posts;
   }
 });
+
+const visualizedPost = ref(null);
+const isLeftSide = ref(null);
+
+const postVisualizationToggle = (payload) => {
+  if(visualizedPost.value === null){
+    isLeftSide.value = payload.isLeftSide;
+    visualizedPost.value = PostStore.getPostByID(payload.postID);
+  }else{
+    visualizedPost.value = null;
+  }
+};
+
+const toggleSide = () => {
+  isLeftSide.value = !isLeftSide.value;
+};
+
+onMounted(() => {
+  gsap.registerPlugin(ScrollTrigger);
+  const tlRightLeft = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".post-sent-container",
+      start: "top 100%",
+      end: "bottom 0%",
+      scrub: true
+    },
+  });
+
+  tlRightLeft.from(".post-sent-container", {
+    x: "100%"
+  })
+    .to(".post-sent-container", {
+      x: "40%",
+      onComplete: toggleSide
+    })
+    .to(".post-sent-container", {
+      x: "0%"
+    });
+
+  const tlLeftRight = gsap.timeline({
+    scrollTrigger: {
+      trigger: ".post-sent-container",
+      start: "top 100%",
+      end: "bottom 0%",
+      scrub: true,
+    },
+  });
+
+  tlLeftRight.to(".post-sent-container", {
+    x: "40%",
+    onComplete: toggleSide
+  })
+    .to(".post-sent-container", {
+      x: "100%"
+    });
+    
+});
 </script>
 
 <template>
@@ -62,9 +122,13 @@ watchEffect(() => {
       />
     </div>
     </div>
-    <div v-for="post in threadPosts" :key="post.postID">
+    <div class="post-sent-container" v-for="post in threadPosts" :key="post.postID">
       <h2>Crée par {{post.userID}} Envoyé par {{ props.UserID }}</h2>
-      <Post v-bind="post" />
+      <Post 
+      v-bind="post"
+      @post-hovered="postVisualizationToggle"
+      @post-not-hovered="postVisualizationToggle"
+      />
       <p>Envoyé le {{post.sentDate }}</p>
     </div>
   </div>
@@ -79,5 +143,24 @@ watchEffect(() => {
   width: 80ex;
   margin: 0 auto;
   background-color:  lightcyan;
+}
+
+.visualizationModal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 35%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-side{
+  left: 0;
+}
+
+.right-side{
+  right: 0;
 }
 </style>

@@ -19,20 +19,12 @@ const visualizedPost = ref(null);
 const isLeftSide = ref(null);
 
 const postVisualizationToggle = (payload) => {
-  console.log("handled");
   if(visualizedPost.value === null){
     isLeftSide.value = payload.isLeftSide;
     visualizedPost.value = store.getPostByID(payload.postID);
   }else{
     visualizedPost.value = null;
   }
-
-  return {
-    visualizedPost,
-    userPosts,
-    isLeftSide,
-    postVisualizationToggle,
-  };
 };
 
 
