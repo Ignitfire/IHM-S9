@@ -36,47 +36,45 @@ const props= defineProps({
 });
 
 onMounted(() => {
-  gsap.from(".postVisualization-container", {duration: 0.5, opacity: 0});
+  gsap.from(".postVisualization", {duration: 0.5, opacity: 0});
 });
 
 onBeforeUnmount(() => {
-  gsap.to(".postVisualization-container", {duration: 0.5, opacity: 0});
+  gsap.to(".postVisualization", {duration: 5, opacity: 0});
 });
 </script>
 
 <template>
-    <div class="postVisualization-container">
-
-<div class="post">
-  <div class="top">
-    <TimeCounter :time="props.timeLeft" class="top-left"></TimeCounter>
-    <WaterCounter :droplets="props.droplets" class="top-right"></WaterCounter>
-  </div>
-  <div class="middle">
-    <p>{{props.content}}</p>
-  </div>
-  <div class="bottom">
-    <p class="bottom-left">arrosé {{props.totalWatering}} fois</p>
-    <p class="bottom-right">crée le {{props.creationDate}}</p>
-  </div>
-</div>
-</div>
-
+    <div class="postVisualization">
+        <div class="top">
+          <TimeCounter :time="props.timeLeft" class="top-left"></TimeCounter>
+          <WaterCounter :droplets="props.droplets" class="top-right"></WaterCounter>
+        </div>
+        <div class="middle">
+          <p>{{props.content}}</p>
+        </div>
+        <div class="bottom">
+          <p class="bottom-left">arrosé {{props.totalWatering}} fois</p>
+          <p class="bottom-right">crée le {{props.creationDate}}</p>
+        </div>
+    </div>
 </template>
 
 <style scoped>
-.post {
+.postVisualization {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
+  background-color: lightgreen;
   border-radius: 0.5rem;
   padding: 0.5rem;
   margin: 0.5rem 1rem;
-  height: 20vh; /* Adjust as needed */
-  width: 20vh; /* Adjust as needed */
+  height: 50%; /* Adjust as needed */
+  width: 90%; /* Adjust as needed */
+  z-index: 2;
 }
 .top-left, .top-right, .bottom-left, .bottom-right {
   position: absolute;

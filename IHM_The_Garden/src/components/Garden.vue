@@ -16,16 +16,23 @@ const store = usePostStore();
 const userPosts = computed(() => store.getPostsByUser(props.UserID));
 
 const visualizedPost = ref(null);
-const modalClass = ref(null);
+const isLeftSide = ref(null);
 
 const postVisualizationToggle = (payload) => {
   console.log("handled");
   if(visualizedPost.value === null){
-    modalClass.value = payload.isLeftSide ? 'left-side visualizationModal' : 'right-side visualizationModal';
+    isLeftSide.value = payload.isLeftSide;
     visualizedPost.value = store.getPostByID(payload.postID);
   }else{
     visualizedPost.value = null;
   }
+
+  return {
+    visualizedPost,
+    userPosts,
+    isLeftSide,
+    postVisualizationToggle,
+  };
 };
 
 
@@ -33,21 +40,31 @@ const postVisualizationToggle = (payload) => {
 
 <template>
   <div class="garden">
-    <div 
-    v-if="visualizedPost !== null"
-    :class="modalClass.value"
+    <div id="visualization">
+      <div 
+      v-if="visualizedPost !== null && !isLeftSide"
+      class="visualizationModal left-side"
     >
       <PostVisualization
-    v-bind="visualizedPost"
-    />
+        v-bind="visualizedPost"
+      />
+    </div>
+    <div 
+      v-if="visualizedPost !== null && isLeftSide"
+      class="visualizationModal right-side"
+    >
+      <PostVisualization
+        v-bind="visualizedPost"
+      />
+    </div>
     </div>
     <Post
-    v-for="post in userPosts"
-    :key="post.postID"
-    v-bind="post"
-    :style="{ gridArea: `${post.location.y + 1} / ${post.location.x + 1}` }"
-    @post-hovered="postVisualizationToggle"
-    @post-not-hovered="postVisualizationToggle"
+      v-for="post in userPosts"
+      :key="post.postID"
+      v-bind="post"
+      :style="{ gridArea: `${post.location.y + 1} / ${post.location.x + 1}` }"
+      @post-hovered="postVisualizationToggle"
+      @post-not-hovered="postVisualizationToggle"
     />
   </div>
 </template>
@@ -71,6 +88,9 @@ const postVisualizationToggle = (payload) => {
   bottom: 0;
   width: 35%;
   height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .left-side{

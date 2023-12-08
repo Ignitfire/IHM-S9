@@ -105,12 +105,12 @@ onMounted(() => {
 <template>
   <div 
   class="post-container"
-   @mouseleave="$emit('post-not-hovered', { postID: props.postID, isLeftSide: isLeftSide.value })"
-   >
-
-    <div 
-    class="post" 
-    @mousehover="$emit('post-hovered', { postID: props.postID, isLeftSide: isLeftSide.value });"
+  >
+  
+  <div 
+  class="post" 
+  @mouseleave="$emit('post-not-hovered', { postID: props.postID, isLeftSide: isLeftSide })"
+    @mouseenter="$emit('post-hovered', { postID: props.postID, isLeftSide: isLeftSide });"
     >
       <div class="top">
         <TimeCounter :time="props.timeLeft" class="top-left"></TimeCounter>

@@ -1,8 +1,8 @@
 <script setup>
 import { ref, watchEffect } from 'vue';
-import { useThreadStore } from '../stores/threads'
-import { usePostStore } from '../stores/posts'
-import { useUserStore } from '../stores/users'
+import { useThreadStore } from '../stores/threads';
+import { usePostStore } from '../stores/posts';
+import { useUserStore } from '../stores/users';
 import Post from './Post.vue';
 
 const props = defineProps({
@@ -10,11 +10,11 @@ const props = defineProps({
     type: Number,
     required: true
   }
-})
+});
 
-const Threadstore = useThreadStore()
-const PostStore = usePostStore()
-const UserStore = useUserStore()
+const Threadstore = useThreadStore();
+const PostStore = usePostStore();
+const UserStore = useUserStore();
 
 const threadPosts = ref(null);
 const localUser = UserStore.getLocalUser();
@@ -40,6 +40,24 @@ watchEffect(() => {
 
 <template>
   <div v-if="threadPosts" class="thread">
+    <div id="visualization">
+      <div 
+      v-if="visualizedPost !== null && !isLeftSide"
+      class="visualizationModal left-side"
+    >
+      <PostVisualization
+        v-bind="visualizedPost"
+      />
+    </div>
+    <div 
+      v-if="visualizedPost !== null && isLeftSide"
+      class="visualizationModal right-side"
+    >
+      <PostVisualization
+        v-bind="visualizedPost"
+      />
+    </div>
+    </div>
     <div v-for="post in threadPosts" :key="post.postID">
       <h2 v-bind="post">Crée par {{post.userID}} Envoyé par {{ props.UserID }}</h2>
       <Post v-bind="post" />
