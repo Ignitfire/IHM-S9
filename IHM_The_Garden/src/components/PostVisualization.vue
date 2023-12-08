@@ -68,7 +68,7 @@ onBeforeUnmount(() => {
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-  background-color: lightgreen;
+  background-color: whitesmoke;
   border-radius: 0.5rem;
   padding: 0.5rem;
   margin: 0.5rem 1rem;
@@ -80,21 +80,21 @@ onBeforeUnmount(() => {
   position: absolute;
 }
 .top-left {
-  top: 0;
-  left: 0;
+  top: 0.5rem;
+  left: 0.5rem;
 }
 .top-right {
-  top: 0;
-  right: 0;
+  top: 0.5rem;
+  right: 0.5rem;
 }
 .bottom-left {
   font-size: 0.8rem;
-  bottom: 0;
-  left: 0;
+  bottom: 0.5rem;
+  left: 0.5rem;
 }
 .bottom-right {
   font-size: 0.8rem;
-  bottom: 0;
-  right: 0;
+  bottom: 0.5rem;
+  right: 0.5rem;
 }
 </style>

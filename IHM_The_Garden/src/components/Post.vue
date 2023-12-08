@@ -63,23 +63,17 @@ onMounted(() => {
   @mouseleave="$emit('post-not-hovered', { postID: props.postID, isLeftSide: isLeftSide })"
     @mouseenter="$emit('post-hovered', { postID: props.postID, isLeftSide: isLeftSide });"
     >
-      <div class="top">
-        <TimeCounter :time="props.timeLeft" class="top-left"></TimeCounter>
-        <WaterCounter :droplets="props.droplets" class="top-right"></WaterCounter>
-      </div>
-      <div class="middle">
+
         <p>{{props.content}}</p>
-      </div>
-      <div class="bottom">
-        <p class="bottom-left">arrosé {{props.totalWatering}} fois</p>
-        <p class="bottom-right">crée le {{props.creationDate}}</p>
-      </div>
+
+
     </div>
   </div>
 </template>
 
 <style scoped>
 .post {
+  background-color: white;
   position: relative;
   display: flex;
   flex-direction: column;
