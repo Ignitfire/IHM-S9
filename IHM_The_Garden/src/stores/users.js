@@ -1,5 +1,12 @@
 import { defineStore } from 'pinia'
 
+function getRandomDate() {
+  const start = new Date(2000, 0, 1);
+  const end = new Date();
+  const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+  return `${randomDate.getDate()}-${randomDate.getMonth() + 1}-${randomDate.getFullYear()}`;
+}
+
 export const useUserStore = defineStore({
   id: 'users',
   state: () => ({
@@ -17,7 +24,7 @@ export const useUserStore = defineStore({
         UserName: "User" + i,
         UserPdeudo: "Pseudo" + i,
         Following: following,
-        CreationDate: new Date().toISOString(), // Ajoute une date de création pour chaque user
+        CreationDate: getRandomDate(), // Ajoute une date de création pour chaque user
         TotalWatering: Math.floor(Math.random() * 1000),
         TotalPosting: Math.floor(Math.random() * 1000),
         TotalFollowing: Math.floor(Math.random() * 1000),

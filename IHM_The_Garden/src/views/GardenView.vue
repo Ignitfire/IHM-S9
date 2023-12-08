@@ -64,9 +64,7 @@ const togglePanel = () => {
         <RoutingButton type="home" size="medium" path="/"/>
         <ActionButton type="contacts" size="medium" :action="togglePanel"/>
         <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
-
-
-      </div>
+     </div>
       <RoutingButton type="thread" size="big" path="/thread/"/>
     </div>
     <Garden :UserID="User.UserID"/>
@@ -121,6 +119,6 @@ const togglePanel = () => {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0 1rem;
+  padding: 0.5rem;
 }
 </style>

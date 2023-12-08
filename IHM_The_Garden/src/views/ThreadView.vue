@@ -17,9 +17,11 @@ const route = useRoute();
 const store = useUserStore();
 
 const User = ref(null);
+let targetUserName = ref(null);
+
 
 watchEffect(async () => {
-  const targetUserName = route.params.username;
+  targetUserName = route.params.username;
   if (targetUserName) {
     User.value = store.getUserByName(targetUserName);
   } else {
@@ -38,7 +40,16 @@ const togglePanel = () => {
   <main v-if="User" class="container">
     <div class="navbar">
       <div class="top">
+        <div class="highUI">
+          <h1 v-if="!targetUserName" class="threadTitle">Fil Principal</h1>
 
+          <img v-if="targetUserName" class ="avatar" :src="User.AvatarPicture"/>
+          <ActionButton type="settings" class="settings" size="small"/>
+        </div>
+        <div class="identity">
+          <h1>{{User.UserPdeudo}}</h1>
+          <h2>{{User.UserName}}</h2>
+        </div>
       </div>
       <div class = "mediumButtons">
         <RoutingButton type="home" size="medium" path="/thread/"/>
@@ -74,12 +85,6 @@ const togglePanel = () => {
   /* Ajoutez vos styles de thread ici */
 }
 
-.button1{
-  position: absolute;
-  bottom: 0;
-  margin: 1rem;
-}
-
 .mediumButtons{
   display: flex;
   flex-direction: line;
@@ -93,4 +98,35 @@ const togglePanel = () => {
   justify-content: space-evenly;
   height: 90%;
 }
+
+.avatar{
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+}
+
+.threadTitle{
+  font-family:fantasy;
+  position: absolute;
+  top: 0.5rem;
+  margin: 0;
+  width: 5rem;
+}
+
+.settings{
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5rem;
+}
+.highUI {
+  position: absolute;
+  width: 15%;
+  top: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 0.5rem;
+}
+
 </style>
