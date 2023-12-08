@@ -1,5 +1,5 @@
 <script setup>
-import { computed, onMounted, ref, watchEffect } from 'vue';
+import { onBeforeUpdate, onMounted, onUpdated, ref, watchEffect } from 'vue';
 import { useThreadStore } from '../stores/threads';
 import { usePostStore } from '../stores/posts';
 import { useUserStore } from '../stores/users';
@@ -45,29 +45,21 @@ watchEffect(() => {
 });
 
 const visualizedPost = ref(null);
-const isLeftSideValue = ref(false);
-const isLeftSide = computed(() => isLeftSideValue);
+
+const postsIds = ref([]);
 
 const postVisualizationToggle = (payload) => {
   if(visualizedPost.value === null){
-    isLeftSideValue.value = payload.isLeftSide;
     visualizedPost.value = PostStore.getPostByID(payload.postID);
   }else{
     visualizedPost.value = null;
   }
 };
 
-const toggleSide = () => {
-  isLeftSideValue.value = !isLeftSideValue.value;
-};
-
-onMounted(() => {
-  gsap.registerPlugin(ScrollTrigger);
+const animationZigZag = () => {
   const thread = document.querySelector('.thread');
 
   const parentWidth = thread.offsetWidth;
-
-
   const posts = document.querySelectorAll(".post-sent-container");
 
   posts.forEach((post) =>{
@@ -82,37 +74,34 @@ onMounted(() => {
 
     tl
       .to(post, {
-        x: -parentWidth * 0.45,
-        onComplete: toggleSide
-      })
-      .to(post, {
         x: -parentWidth * 0.8,
-      })
-      .to(post, {
-        x: -parentWidth * 0.4,
-        onComplete: toggleSide
       })
       .to(post, {
         x: 0
       });
   });
+};
+
+onMounted(() => {
+  gsap.registerPlugin(ScrollTrigger);
+  postsIds.value = threadPosts.value.map(post => post.postID);
+  animationZigZag();
+});
+
+onUpdated(() => {
+  const isDifferent = postsIds.value.some((id, index) => id !== threadPosts.value[index].postID);
+  if(isDifferent){
+    postsIds.value = threadPosts.value.map(post => post.postID);
+    animationZigZag();
+  }
 });
 </script>
 
 <template>
-  
   <div class="container">
     <div id="visualization">
-      <div 
-      v-if="visualizedPost !== null && !isLeftSide"
-      class="visualizationModal left-side"
-    >
-      <PostVisualization
-        v-bind="visualizedPost"
-      />
-    </div>
     <div 
-      v-if="visualizedPost !== null && isLeftSide"
+      v-if="visualizedPost !== null"
       class="visualizationModal right-side"
     >
       <PostVisualization
@@ -164,10 +153,6 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.left-side{
-  left: 15vw;
 }
 
 .right-side{
