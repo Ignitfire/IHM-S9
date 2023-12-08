@@ -53,11 +53,11 @@ const togglePanel = () => {
           <WaterCounter :droplets="456"/>
         </div>
         <div class = "infos">
-          <p>{{ User.CreationDate }}</p>
-          <p>{{ User.TotalWatering }}</p>
-          <p>{{ User.TotalFollowers }}</p>
-          <p>{{ User.TotalFollowing }}</p>
-          <p>{{ User.TotalPosting }}</p>
+          <p>Compte crée le {{ User.CreationDate }}</p>
+          <p>Arrosé {{ User.TotalWatering }} fois</p>
+          <p>suivi par {{ User.TotalFollowers }} personnes</p>
+          <p>{{ User.TotalFollowing }} personnes suivs</p>
+          <p>a posté {{ User.TotalPosting }} fois</p>
         </div>
       </div>
       <div class = "mediumButtons">
@@ -113,6 +113,10 @@ const togglePanel = () => {
   width: 3rem;
   height: 3rem;
   border-radius: 50%;
+}
+
+.lowUI{
+  text-align: center;
 }
 
 .highUI{

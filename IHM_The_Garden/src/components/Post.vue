@@ -64,7 +64,7 @@ onMounted(() => {
     @mouseenter="$emit('post-hovered', { postID: props.postID, isLeftSide: isLeftSide });"
     >
 
-        <p>{{props.content}}</p>
+        <p class="text">{{props.content}}</p>
 
 
     </div>
@@ -72,6 +72,9 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.text{
+  text-align: center;
+}
 .post {
   background-color: white;
   position: relative;
