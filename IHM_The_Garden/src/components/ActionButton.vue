@@ -43,10 +43,11 @@ return {icon, color}
 
 
 <template>
-  
+    <div class="button">
     <button :class="['button',buttonProps.color, props.size]" @click="props.action"> 
       <img v-if="buttonProps.icon" :src="buttonProps.icon" class="button-icon" />
     </button>
+  </div>
 </template>
 
 <style scoped>

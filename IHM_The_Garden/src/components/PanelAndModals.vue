@@ -17,6 +17,7 @@
   <script>
   import { ref, onMounted, onBeforeUnmount } from 'vue';
   import RoutingButton from '@/components/RoutingButton.vue';
+import { useUserStore } from '@/stores/users';
   
   export default {
     components: {
@@ -77,6 +78,13 @@
         document.removeEventListener('mousedown', handleMousedown);
         document.removeEventListener('mouseup', handleMouseup);
       });
+
+      const userStore = useUserStore()
+
+      const getUserById = (id) => {
+      const user = userStore.getUserById(id) // Utilisez la fonction appropriée de votre userStore pour obtenir l'utilisateur par son ID
+      return user ? user.name : 'Utilisateur non trouvé' // Retourne le nom de l'utilisateur si trouvé, sinon retourne 'Utilisateur non trouvé'
+      }
   
       return {
         modalRefs,
@@ -84,7 +92,8 @@
         isModalOpen,
         openModal,
         closeModal,
-        closeModalAndPanel
+        closeModalAndPanel,
+        getUserById
       };
     }
   };

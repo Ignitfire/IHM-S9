@@ -37,7 +37,7 @@ const props= defineProps({
   },
 });
 
-
+const prologue = props.content.substring(0,40)+"..."
 const isLeftSide = ref(true);
 
 onMounted(() => {
@@ -64,7 +64,7 @@ onMounted(() => {
     @mouseenter="$emit('post-hovered', { postID: props.postID, isLeftSide: isLeftSide });"
     >
 
-        <p class="text">{{props.content}}</p>
+        <p class="text">{{prologue}}</p>
 
 
     </div>

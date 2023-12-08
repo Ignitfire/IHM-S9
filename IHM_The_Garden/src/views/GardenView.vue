@@ -79,6 +79,13 @@ const togglePanel = () => {
   position: relative;
 }
 
+h1{
+  font-size: 1.5rem;
+}
+h2{
+  font-size: 1.2rem;
+
+}
 p{
   font-size: 0.9rem;
 }

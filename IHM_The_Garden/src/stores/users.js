@@ -6,6 +6,18 @@ function getRandomDate() {
   const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
   return `${randomDate.getDate()}-${randomDate.getMonth() + 1}-${randomDate.getFullYear()}`;
 }
+function getRandomUserName(){
+  const firstNames = ["Jean", "Marie", "Pierre", "Julie", "Sophie", "Nicolas", "Paul", "Lucas", "Emma", "Chloé", "François", "Louis", "René", "Margot", "Élise", "Claire", "Guillaume", "Benoît", "Mathilde", "Céline"];
+  const lastNames = ["Dupont", "Lefevre", "Martin", "Bernard", "Robert", "Petit", "Girard", "Moreau", "Leroy", "Simon", "Lemoine", "Leroux", "Marchand", "Dumont", "Blanc", "Thomas", "Lambert", "Fournier", "Morel", "Chevalier"];
+  const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+  const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+  return firstName + " " + lastName;
+}
+function getRandomUserPseudo(){
+  const pseudos = ["Superman", "WonderWoman", "IronMan", "BlackWidow", "Spiderman", "Batwoman", "AquaMan", "Catwoman", "Flash", "GreenLantern", "Hulk", "Thor", "CaptainAmerica", "BlackPanther", "Hawkeye", "Falcon", "StarLord", "Groot", "Rocket", "DrStrange"];
+  const pseudo = pseudos[Math.floor(Math.random() * pseudos.length)];
+  return "@"+pseudo;
+}
 
 export const useUserStore = defineStore({
   id: 'users',
@@ -21,8 +33,8 @@ export const useUserStore = defineStore({
       }
       return {
         UserID: i + 1,
-        UserName: "User" + i,
-        UserPdeudo: "Pseudo" + i,
+        UserName: "User"+i,
+        UserPdeudo: getRandomUserPseudo(),
         Following: following,
         CreationDate: getRandomDate(), // Ajoute une date de création pour chaque user
         TotalWatering: Math.floor(Math.random() * 1000),

@@ -21,9 +21,9 @@ let targetUserName = ref(null);
 
 
 watchEffect(async () => {
-  targetUserName = route.params.username;
+  targetUserName = route.params.userID;
   if (targetUserName) {
-    User.value = store.getUserByName(targetUserName);
+    User.value = store.getUserByID(targetUserName);
   } else {
     User.value = store.getLocalUser();
   }
