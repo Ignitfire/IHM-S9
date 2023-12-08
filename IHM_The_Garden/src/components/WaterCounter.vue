@@ -21,6 +21,10 @@ defineProps({
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: lightblue;
   gap: 0.5rem;
+  height: 2rem;
+  width: 6rem;
+  border-radius: 10px;
 }
 </style>

@@ -79,6 +79,10 @@ const togglePanel = () => {
   position: relative;
 }
 
+p{
+  font-size: 0.9rem;
+}
+
 .navbar {
   display: flex;
   flex-direction: column;
@@ -116,7 +120,11 @@ const togglePanel = () => {
 }
 
 .lowUI{
+  display: flex;
   text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
 }
 
 .highUI{
@@ -124,5 +132,12 @@ const togglePanel = () => {
   flex-direction: row;
   justify-content: space-between;
   padding: 0.5rem;
+}
+
+.infos{
+  border-radius: 10px;
+  background-color: lightgoldenrodyellow;
+  padding-left: 0.5rem;
+  margin: 1rem;
 }
 </style>
