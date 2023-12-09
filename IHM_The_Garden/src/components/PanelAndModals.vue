@@ -117,7 +117,7 @@ import { useUserStore } from '@/stores/users';
   height: 10rem;
   background-color: white;
   opacity: 1;
-  z-index: 1;
+  z-index: 2;
   border: 1px solid black;
   border-radius: 0.5rem;
   padding: 1rem;
