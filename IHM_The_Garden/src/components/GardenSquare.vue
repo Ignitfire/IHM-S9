@@ -1,6 +1,6 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import Post from './Post.vue.js';
+import Post from './post/Post.vue';
 
 const props = defineProps({
   post: {

@@ -3,8 +3,8 @@ import { onBeforeUpdate, onMounted, onUpdated, ref, watchEffect } from 'vue';
 import { useThreadStore } from '../stores/threads';
 import { usePostStore } from '../stores/posts';
 import { useUserStore } from '../stores/users';
-import Post from './Post.vue';
-import PostVisualization from './PostVisualization.vue';
+import Post from './post/Post.vue';
+import PostVisualization from './post/PostVisualization.vue';
 import {gsap} from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 

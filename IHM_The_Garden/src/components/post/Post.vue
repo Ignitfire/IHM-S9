@@ -1,6 +1,6 @@
 <script setup>
 import TimeCounter from './TimeCounter.vue';
-import WaterCounter from './WaterCounter.vue';
+import WaterCounter from '../WaterCounter.vue';
 import { onMounted, ref } from 'vue';
 
 

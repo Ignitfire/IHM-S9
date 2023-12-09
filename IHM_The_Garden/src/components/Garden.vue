@@ -1,8 +1,8 @@
 <script setup>
 import { usePostStore } from '../stores/posts';
-import Post from './Post.vue';
+import Post from './post/Post.vue';
 import { computed, ref } from 'vue';
-import PostVisualization from './PostVisualization.vue';
+import PostVisualization from './post/PostVisualization.vue';
 
 
 const props = defineProps({

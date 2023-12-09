@@ -1,17 +1,17 @@
 <script setup>
-import TimeCounter from '@/components/TimeCounter.vue';
+import TimeCounter from '@/components/post/TimeCounter.vue';
 import WaterCounter from '@/components/WaterCounter.vue';
-import Post from '@/components/Post.vue';
+import Post from '@/components/post/Post.vue';
 import Garden from '@/components/Garden.vue';
 import Thread from '@/components/Thread.vue';
-import RoutingButton from '@/components/RoutingButton.vue';
+import RoutingButton from '@/components/nav/RoutingButton.vue';
 import { useUserStore } from '../stores/users';
-import ActionButton from '@/components/ActionButton.vue';
+import ActionButton from '@/components/nav/ActionButton.vue';
 import { ref, onMounted, VueElement } from 'vue';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import { onBeforeUnmount } from 'vue';
-import PanelAndModals from '@/components/PanelAndModals.vue';
+import PanelAndModals from '@/components/nav/PanelAndModals.vue';
 
 
 

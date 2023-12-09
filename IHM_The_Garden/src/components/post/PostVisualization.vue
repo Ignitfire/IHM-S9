@@ -1,6 +1,6 @@
 <script setup>
 import TimeCounter from './TimeCounter.vue';
-import WaterCounter from './WaterCounter.vue';
+import WaterCounter from '../WaterCounter.vue';
 import { onBeforeUnmount, onMounted } from 'vue';
 import {gsap} from 'gsap';
 
