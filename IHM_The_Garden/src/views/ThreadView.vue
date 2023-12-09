@@ -11,7 +11,7 @@ import { ref, onMounted, VueElement } from 'vue';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import { onBeforeUnmount } from 'vue';
-import PanelAndModals from '@/components/PanelAndModals.vue';
+import PanelAndModals from '@/components/nav/PanelAndModals.vue';
 
 const route = useRoute();
 const store = useUserStore();
