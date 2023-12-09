@@ -54,7 +54,7 @@ const togglePanel = () => {
       <div class = "mediumButtons">
         <RoutingButton type="home" size="medium" path="/thread/"/>
         <ActionButton type="contacts" size="medium" :action="togglePanel"/>
-        <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
+        <!-- <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/> -->
       </div>
       <RoutingButton type="garden" size="big" path="/"/>
     </div>
@@ -86,7 +86,7 @@ const togglePanel = () => {
 
 .mediumButtons{
   display: flex;
-  flex-direction: line;
+  flex-direction: row;
   justify-content: space-around;
   height: 5rem;
 }
@@ -115,7 +115,7 @@ const togglePanel = () => {
 .settings{
   position: absolute;
   top: 0;
-  right: 0;
+  left: 10vw;
   margin: 0.5rem;
 }
 .highUI {
@@ -126,6 +126,15 @@ const togglePanel = () => {
   flex-direction: row;
   justify-content: space-between;
   padding: 0.5rem;
+}
+
+.identity{
+  padding-left: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: start;
+  gap: 10px;
 }
 
 </style>

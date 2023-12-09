@@ -71,13 +71,15 @@ const animationZigZag = () => {
         scrub: true,
       },
     });
-
+    
     tl
       .to(post, {
         x: -parentWidth * 0.8,
+        ease: "none",
       })
       .to(post, {
-        x: 0
+        x: 0,
+        ease: "none",
       });
   });
 };

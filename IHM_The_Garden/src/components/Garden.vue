@@ -27,6 +27,10 @@ const postVisualizationToggle = (payload) => {
   }
 };
 
+const getPostForLocation(x, y){
+  
+}
+
 
 </script>
 

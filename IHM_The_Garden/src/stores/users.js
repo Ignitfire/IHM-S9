@@ -1,4 +1,4 @@
-import { defineStore } from 'pinia'
+import { defineStore } from 'pinia';
 
 function getRandomDate() {
   const start = new Date(2000, 0, 1);
@@ -17,6 +17,17 @@ function getRandomUserPseudo(){
   const pseudos = ["Superman", "WonderWoman", "IronMan", "BlackWidow", "Spiderman", "Batwoman", "AquaMan", "Catwoman", "Flash", "GreenLantern", "Hulk", "Thor", "CaptainAmerica", "BlackPanther", "Hawkeye", "Falcon", "StarLord", "Groot", "Rocket", "DrStrange"];
   const pseudo = pseudos[Math.floor(Math.random() * pseudos.length)];
   return "@"+pseudo;
+}
+
+function getWaterGrid(){
+  const grid = [];
+  for (let i = 0; i < 7; i++) {
+    grid.push([]);
+    for (let j = 0; j < 4; j++) {
+      grid[i].push(Math.floor(Math.random() * 600));
+    }
+  }
+  return grid;
 }
 
 export const useUserStore = defineStore({
@@ -38,6 +49,7 @@ export const useUserStore = defineStore({
         Following: following,
         CreationDate: getRandomDate(), // Ajoute une date de création pour chaque user
         TotalWatering: Math.floor(Math.random() * 1000),
+        gardenWaterGrid: getWaterGrid(),
         TotalPosting: Math.floor(Math.random() * 1000),
         TotalFollowing: Math.floor(Math.random() * 1000),
         TotalFollowers: Math.floor(Math.random() * 1000),
@@ -49,19 +61,22 @@ export const useUserStore = defineStore({
   }),
   getters: {
     getUserByID: (state) => (userID) => {
-      return state.users.find(user => user.UserID === userID)
+      return state.users.find(user => user.UserID === userID);
     },
     getUserByName: (state) => (userName) => {
-      return state.users.find(user => user.UserName === userName)
+      return state.users.find(user => user.UserName === userName);
     },
     getLocalUser: (state) => () =>{
-      return state.users.find(user => user.UserID === state.localUserID)
+      return state.users.find(user => user.UserID === state.localUserID);
     },
     getFollowingByID: (state) => (userID) => {
-      return state.users.find(user => user.UserID === userID).Following
+      return state.users.find(user => user.UserID === userID).Following;
     },
+    getUserWaterGrid: (state) => (userID) => {
+      return state.users.find(user => user.UserID === userID).gardenWaterGrid;
+    }
   },
   actions: {
     // console log pour tester  
   }
-})
+});

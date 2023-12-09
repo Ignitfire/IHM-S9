@@ -11,25 +11,9 @@ const props= defineProps({
     type: Number,
     required: true
   },
-  timeLeft: {
-    type: Number,
-    required: true
-  },
   content: {
     type: String,
     required: true
-  },
-  creationDate: {
-    type: String,
-    required: true
-  },
-  totalWatering: {
-    type: Number,
-    required: true
-  },
-  location: {
-    type: Object,
-    required: false
   },
   postID: {
     type: Number,
@@ -37,36 +21,19 @@ const props= defineProps({
   },
 });
 
-const prologue = props.content.substring(0,40)+"..."
-const isLeftSide = ref(true);
+const prologue = props.content.substring(0,40)+"...";
 
-onMounted(() => {
-  if (!window.location.href.includes('/thread')){
-    if (props.location.x < 3) {
-      isLeftSide.value = true;
-    } else {
-      isLeftSide.value = false;
-    }
-  }else{
-    isLeftSide.value = false;
-  }
-});
 </script>
 
 <template>
   <div 
   class="post-container"
   >
-  
   <div 
   class="post" 
-  @mouseleave="$emit('post-not-hovered', { postID: props.postID, isLeftSide: isLeftSide })"
-    @mouseenter="$emit('post-hovered', { postID: props.postID, isLeftSide: isLeftSide });"
+    @mouseenter="$emit('post-hovered', { postID: props.postID });"
     >
-
         <p class="text">{{prologue}}</p>
-
-
     </div>
   </div>
 </template>

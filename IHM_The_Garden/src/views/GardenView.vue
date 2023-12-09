@@ -121,8 +121,8 @@ p{
 }
 
 .avatar{
-  width: 3rem;
-  height: 3rem;
+  width: 7rem;
+  height: 7rem;
   border-radius: 50%;
 }
 
