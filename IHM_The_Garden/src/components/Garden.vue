@@ -27,10 +27,17 @@ const postVisualizationToggle = (payload) => {
   }
 };
 
-const getPostForLocation(x, y){
-  
-}
+const getPostForLocation = (x, y) => {
+  return userPosts.value.find(post => post.location.x === x && post.location.y === y);
+};
 
+const postsByLocations = [];
+
+for (let x = 0; x < 7; x++) {
+  for (let y = 0; y < 4; y++) {
+    postsByLocations[x] = getPostForLocation( x, y );
+  }
+}
 
 </script>
 

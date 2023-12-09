@@ -82,9 +82,6 @@ const deletePost = () => {
   emit('delete-post', { postID: props.post.postID });
 };
 
-const deletePost = (payload) => {
-  //TODO
-};
 
 const postIsMoving = ref(false);
 
