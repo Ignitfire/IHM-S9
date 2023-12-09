@@ -1,5 +1,3 @@
-
-  
 <script>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import RoutingButton from '@/components/nav/RoutingButton.vue';

@@ -24,6 +24,14 @@ const props = defineProps({
   }
 });
 
+const emit = defineEmits([
+  'post-hovered', 
+]);
+
+const enzoHandler = () => {
+  console.log('señoritas');
+};
+
 const targetUserName = props.isLocal
 
 
@@ -47,7 +55,7 @@ const targetUserName = props.isLocal
       </div>
       <div class = "mediumButtons">
         <RoutingButton type="home" size="medium" path="/thread/"/>
-        <ActionButton type="contacts" size="medium" :action="togglePanel"/>
+        <ActionButton type="contacts" size="medium" action="enzo" @enzo="enzoHandler"/>
         <!-- <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/> -->
       </div>
       <RoutingButton type="garden" size="big" path="/"/>

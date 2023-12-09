@@ -16,6 +16,9 @@ const props = defineProps({
   }
 });
 
+
+
+
 const buttonProps = computed(() => {
   let icon='';
   let color='';
@@ -49,12 +52,18 @@ const buttonProps = computed(() => {
   }
   return {icon, color};
 });
-</script>
 
+const emit = defineEmits(['action']);
+
+const buttonHandler = () => {
+  emit(props.action);
+};
+
+</script>
 
 <template>
     <div class="button">
-    <button :class="['button',buttonProps.color, props.size]" @click="props.action"> 
+    <button :class="['button',buttonProps.color, props.size]" @click="buttonHandler"> 
       <img v-if="buttonProps.icon" :src="buttonProps.icon" class="button-icon" />
     </button>
   </div>
