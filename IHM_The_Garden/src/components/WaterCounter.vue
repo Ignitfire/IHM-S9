@@ -1,13 +1,13 @@
 <script setup>
-import { faTint } from '@fortawesome/free-solid-svg-icons'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { faTint } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
 defineProps({
   droplets: {
     type: Number,
     required: true
   }
-})
+});
 </script>
 
 <template>

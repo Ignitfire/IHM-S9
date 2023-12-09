@@ -6,11 +6,11 @@ const props=defineProps({
     type: Number,
     required: true
   }
-})
+});
 
-const days = computed(() => Math.floor(props.time / 86400))
-const hours = computed(() => Math.floor((props.time % 86400) / 3600))
-const minutes = computed(() => Math.floor((props.time % 3600) / 60))
+const days = computed(() => Math.floor(props.time / 86400));
+const hours = computed(() => Math.floor((props.time % 86400) / 3600));
+const minutes = computed(() => Math.floor((props.time % 3600) / 60));
 </script>
 
 

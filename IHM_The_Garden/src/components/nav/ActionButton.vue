@@ -11,15 +11,31 @@ const props = defineProps({
     default: 'small'
   },
   action: {
-    type: Function,
-    default: () => {}
+    type: String,
+    required: true
   }
-})
+});
 
-let icon='';
-let color='';
+const buttonProps = computed(() => {
+  let icon='';
+  let color='';
 
-switch (props.type) {
+  switch (props.type) {
+  case 'settings': {
+    icon = '/icons/icon_settings.png';
+    color = 'grey';
+    break;
+  }
+  case 'send': {
+    icon = '/icons/icon_send.png';
+    color = 'blue';
+    break;
+  }
+  case 'contacts': {
+    icon = '/icons/icon_openContacts.png';
+    color = 'yellow';
+    break;
+  }
   case 'sprinkle': {
     icon = '/icons/icon_sprinkle.png';
     color = 'blue';
@@ -30,18 +46,17 @@ switch (props.type) {
     color = 'yellow';
     break;
   }
-  // remove user?
-}
+  }
+  return {icon, color};
+});
 </script>
 
 
 <template>
-  <div class="button">
-  <router-link :to="props.path">
-    <button :class="['button',color, props.size]">
-      <img v-if="icon" :src="icon" class="button-icon" />
+    <div class="button">
+    <button :class="['button',buttonProps.color, props.size]" @click="props.action"> 
+      <img v-if="buttonProps.icon" :src="buttonProps.icon" class="button-icon" />
     </button>
-  </router-link>
   </div>
 </template>
 
