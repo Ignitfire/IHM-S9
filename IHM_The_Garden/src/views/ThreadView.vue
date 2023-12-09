@@ -104,7 +104,6 @@ const togglePanel = () => {
 }
 
 .threadTitle{
-  font-family:fantasy;
   position: absolute;
   top: 0.5rem;
   margin: 0;

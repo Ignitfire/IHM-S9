@@ -112,7 +112,7 @@ import { useUserStore } from '@/stores/users';
 .panel{
   position: absolute;
   top: 0;
-  left: 15%;
+  left: 15vw;
   width: 8rem;
   height: 10rem;
   background-color: white;
