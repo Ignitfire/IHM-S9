@@ -50,7 +50,7 @@ case 'home': {
   justify-content: center;
   border: none;
   border-radius: 0.1rem;
-  padding: 0.5rem;
+  padding: 0.25vw;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
   width: 100%;

@@ -4,6 +4,7 @@ import { useUserStore } from '@/stores/users';
 import RoutingButton from '@/components/nav/RoutingButton.vue';
 import ActionButton from '@/components/nav/ActionButton.vue';
 import PanelAndModals from '@/components/nav/PanelAndModals.vue';
+import WaterCounter from '@/components/WaterCounter.vue';
 
 const props = defineProps({
   User: {
@@ -51,13 +52,14 @@ const togglePanel = () => {
           <h2>{{props.User.UserName}}</h2>
         </div>
           <WaterCounter v-if="isGarden" class="water" :droplets="456"/>
-        <div class = "infos">
+        <div v-if="isGarden" class = "infos">
           <p>Compte crée le {{ User.CreationDate }}</p>
           <p>Arrosé {{ User.TotalWatering }} fois</p>
           <p>suivi par {{ User.TotalFollowers }} personnes</p>
           <p>{{ User.TotalFollowing }} personnes suivs</p>
           <p>a posté {{ User.TotalPosting }} fois</p>
         </div>
+        <div class="nav-buttons">
       <div class = "mediumButtons">
         <RoutingButton v-if="isGarden" class="medium-button" type="home" size="medium" path="/thread/"/>
         <RoutingButton v-if="!isGarden" class="medium-button" type="home" size="medium" path="/"/>
@@ -66,6 +68,7 @@ const togglePanel = () => {
 
       <RoutingButton v-if="isGarden" class="big-button" type="thread" size="big" path="/thread/"/>
       <RoutingButton v-if="!isGarden" class="big-button" type="garden" size="big" path="/"/>
+      </div>
       </div>
 </template>
 
@@ -77,22 +80,22 @@ const togglePanel = () => {
   width: 15vw;
   height: 100vh;
   background-color: transparent;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-between; /* Distribue uniformément l'espace entre les éléments */
+  align-items: center; /* Centre les éléments horizontalement */
   position: sticky;
   left:0;
   top:0;
   bottom:0;
-  /* Ajoutez vos styles de navbar ici */
+  padding: 2vh;
 }
+
+
 .highUI {
   width: 100%;
   height: 10%;
-  top: 0;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 0.5rem;
 }
 
 .avatar{
@@ -111,6 +114,7 @@ const togglePanel = () => {
 
 .identity{
   padding-left: 15px;
+  width: 15vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -142,30 +146,40 @@ const togglePanel = () => {
   padding-left: 0.5rem;
   margin: 1rem;
 }
+
+.nav-buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 30vh;
+}
 .mediumButtons{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 10vh;
+  align-items: center;
+  height: 6vh;
+  width: 10vw;
+  margin: 0.5vw 0;
 }
 .medium-button{
-  width: 5vw;
-  height: 5vw;
+  width: 4vw;
+  height: 4vw;
+  margin: 0.5vw;
 }
 
 h1{
-  font-size: 1.5rem;
+  font-size: 1.35rem;
 }
 h2{
-  font-size: 1.2rem;
+  font-size: 1.08rem;
 }
 p{
-  font-size: 0.9rem;
+  font-size: 0.81rem;
 }
 .big-button{
-  position: absolute;
-  bottom: 0;
-  width: 10vw;
-  height: 10vw;
+  width: 7vw;
+  height: 7vw;
 }
 </style>
