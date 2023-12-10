@@ -1,13 +1,7 @@
 <script setup>
-import TimeCounter from '@/components/post/TimeCounter.vue';
-import WaterCounter from '@/components/WaterCounter.vue';
-import Post from '@/components/post/Post.vue';
-import Garden from '@/components/Garden.vue';
 import Thread from '@/components/Thread.vue';
-import RoutingButton from '@/components/nav/RoutingButton.vue';
 import { useUserStore } from '../stores/allStores';
-import ActionButton from '@/components/nav/ActionButton.vue';
-import { ref, onMounted, VueElement } from 'vue';
+import { ref } from 'vue';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import NavBar from '@/components/nav/NavBar.vue';
@@ -38,14 +32,15 @@ const togglePanel = () => {
 </script>
 
 <template>
-  <main v-if="user" class="container">
-    <NavBar :user="user" :isLocal="isLocal" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
+  <main v-if="user" class="main-container">
+    <NavBar :user="user" :isLocal="isLocal" :isGarden="false" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel" @togglePanel="togglePanel"/>
+    <PanelAndModals :user="user" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
     <Thread :userID="user.userID"/>
   </main>
 </template>
 
 <style scoped>
-.container {
+.main-container {
   display: flex;
   width: 100%;
   position: relative;

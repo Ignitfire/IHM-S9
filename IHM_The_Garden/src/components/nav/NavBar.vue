@@ -4,6 +4,7 @@ import { useUserStore } from '@/stores/allStores';
 import RoutingButton from '@/components/nav/RoutingButton.vue';
 import ActionButton from '@/components/nav/ActionButton.vue';
 import PanelAndModals from '@/components/nav/PanelAndModals.vue';
+import WaterCounter from '@/components/WaterCounter.vue';
 
 const props = defineProps({
   User: {
@@ -11,6 +12,10 @@ const props = defineProps({
     required: true
   },
     isLocal: {
+        type: Boolean,
+        required: true
+    },
+    isGarden: {
         type: Boolean,
         required: true
     },
@@ -25,80 +30,91 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-  'post-hovered', 
+  'togglePanel', 
 ]);
 
-const enzoHandler = () => {
-  console.log('señoritas');
+const togglePanel = () => {
+    emit('togglePanel');
 };
-
-const targetUserName = props.isLocal
-
-
 
 </script>
 
 
 <template>
   <div class="navbar">
-      <div class="top">
         <div class="highUI">
-          <h1 v-if="!targetUserName" class="threadTitle">Fil Principal</h1>
-
-          <img v-if="targetUserName" class ="avatar" :src="User.AvatarPicture"/>
-          <ActionButton type="settings" class="settings" size="small"/>
+          <h1 v-if="isLocal && !isGarden" class="threadTitle">Fil Principal</h1>
+          <img v-if="!isLocal || isGarden" class ="avatar" :src="User.AvatarPicture"/>
+            <ActionButton type="settings" class="settings"/>
         </div>
         <div class="identity">
           <h1>{{props.User.UserPdeudo}}</h1>
           <h2>{{props.User.UserName}}</h2>
         </div>
-      </div>
+          <WaterCounter v-if="isGarden" class="water" :droplets="456"/>
+        <div v-if="isGarden" class = "infos">
+          <p>Compte crée le {{ User.CreationDate }}</p>
+          <p>Arrosé {{ User.TotalWatering }} fois</p>
+          <p>suivi par {{ User.TotalFollowers }} personnes</p>
+          <p>{{ User.TotalFollowing }} personnes suivs</p>
+          <p>a posté {{ User.TotalPosting }} fois</p>
+        </div>
+        <div class="nav-buttons">
       <div class = "mediumButtons">
-        <RoutingButton type="home" size="medium" path="/thread/"/>
-        <ActionButton type="contacts" size="medium" action="enzo" @enzo="enzoHandler"/>
-        <!-- <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/> -->
+        <RoutingButton v-if="isGarden" class="medium-button" type="home" size="medium" path="/thread/"/>
+        <RoutingButton v-if="!isGarden" class="medium-button" type="home" size="medium" path="/"/>
+        <ActionButton class="medium-button" type="contacts" size="medium" action="togglePanel" @togglePanel="togglePanel"/>
       </div>
-      <RoutingButton type="garden" size="big" path="/"/>
-    </div>
+
+      <RoutingButton v-if="isGarden" class="big-button" type="thread" size="big" path="/thread/"/>
+      <RoutingButton v-if="!isGarden" class="big-button" type="garden" size="big" path="/"/>
+      </div>
+      </div>
 </template>
 
 <style scoped>
+
 .navbar {
   display: flex;
   flex-direction: column;
   width: 15vw;
   height: 100vh;
   background-color: transparent;
-  justify-content: center;
+  justify-content: space-between; /* Distribue uniformément l'espace entre les éléments */
+  align-items: center; /* Centre les éléments horizontalement */
   position: sticky;
   left:0;
   top:0;
   bottom:0;
-  /* Ajoutez vos styles de navbar ici */
+  padding: 2vh;
 }
+
+
+.highUI {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .avatar{
-  width: 3rem;
-  height: 3rem;
+  width: 5vw;
+  height: 5vw;
   border-radius: 50%;
 }
+
 .settings{
   position: absolute;
   top: 0;
   left: 10vw;
   margin: 0.5rem;
 }
-.highUI {
-  position: absolute;
-  width: 15%;
-  top: 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 0.5rem;
-}
+
 
 .identity{
   padding-left: 15px;
+  width: 15vw;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -117,11 +133,53 @@ const targetUserName = props.isLocal
   justify-content: space-evenly;
   height: 90%;
 }
+.water{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+}
+.infos{
+  border-radius: 10px;
+  background-color: lightgoldenrodyellow;
+  padding-left: 0.5rem;
+  margin: 1rem;
+}
+
+.nav-buttons{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 30vh;
+}
 .mediumButtons{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  height: 5rem;
+  align-items: center;
+  height: 6vh;
+  width: 10vw;
+  margin: 0.5vw 0;
+}
+.medium-button{
+  width: 4vw;
+  height: 4vw;
+  margin: 0.5vw;
 }
 
+h1{
+  font-size: 1.35rem;
+}
+h2{
+  font-size: 1.08rem;
+}
+p{
+  font-size: 0.81rem;
+}
+.big-button{
+  width: 7vw;
+  height: 7vw;
+}
 </style>

@@ -90,7 +90,7 @@ if(useUserStore().localUserID === props.userID){
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: repeat(4, 1fr);
   padding: 2rem;
-  width: 80%;
+  width: 85%;
   height: 100vh;
   margin: 0 auto;
   background-color: lightgreen;

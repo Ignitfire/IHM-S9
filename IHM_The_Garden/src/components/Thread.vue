@@ -72,7 +72,7 @@ const animationZigZag = () => {
     
     tl
       .to(post, {
-        x: -parentWidth * 0.8,
+        x: (-parentWidth * 0.85)+post.offsetWidth/2,
         ease: "none",
       })
       .to(post, {
@@ -126,16 +126,15 @@ onUpdated(() => {
 <style scoped>
 
 .container {
-  width: 85%;
+  width: 85vw;
 }
 
 .thread {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; 
   align-items: end;
   gap: 1rem;
   width: 100%;
-  margin: 0 auto;
   background-color:  lightcyan;
 }
 
