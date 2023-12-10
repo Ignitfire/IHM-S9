@@ -45,7 +45,7 @@ const togglePanel = () => {
         <div class="highUI">
           <h1 v-if="isLocal && !isGarden" class="threadTitle">Fil Principal</h1>
           <img v-if="!isLocal || isGarden" class ="avatar" :src="user.avatarPicture"/>
-            <ActionButton type="settings" class="settings"/>
+            <ActionButton class="settings" :action="'settings'"/>
         </div>
         <div class="identity">
           <h1>{{props.user.userPdeudo}}</h1>
@@ -63,7 +63,7 @@ const togglePanel = () => {
       <div class = "mediumButtons">
         <RoutingButton v-if="isGarden" class="medium-button" type="home" size="medium" path="/"/>
         <RoutingButton v-if="!isGarden" class="medium-button" type="home" size="medium" path="/thread/"/>
-        <ActionButton class="medium-button" type="contacts" size="medium" action="togglePanel" @togglePanel="togglePanel"/>
+        <ActionButton class="medium-button" size="medium" action="contacts" @contacts="togglePanel"/>
       </div>
 
       <RoutingButton v-if="isGarden" class="big-button" type="thread" size="big" path="/thread/"/>
@@ -109,6 +109,8 @@ const togglePanel = () => {
   top: 0;
   left: 10vw;
   margin: 0.5rem;
+  height: 5vh;
+  width: 7vh;
 }
 
 

@@ -1,6 +1,8 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import TinyPost from './post/TinyPost.vue';
+import PostHoverButtons from './post/PostHoverButtons.vue';
+import HoverOnEmptySquare from './HoverOnEmptySquare.vue';
 
 const props = defineProps({
   post: {
@@ -68,7 +70,7 @@ const postVisualizationToggle = () => {
 };
 
 const quitHover = () => {
-  if(props.post !== null){
+  if(props.post.postID !== undefined){
     postVisualizationToggle();
   }else{
     hovered.value = false;
@@ -76,7 +78,7 @@ const quitHover = () => {
 };
 
 const enterHover = () => {
-  if(props.post === null){
+  if(props.post.postID === undefined){
     hovered.value = true;
   }
 };
@@ -98,7 +100,7 @@ const movePost = () => {
 };
 
 const sprinklePost = () => {
-  emit('sprinkle-post', { postID: props.post.postID });
+  // TODO, arroser le post
 };
 
 const sendPost = () => {
@@ -108,8 +110,6 @@ const sendPost = () => {
 const addOrMoveToPost = () => {
   emit('add-or-moveTo-post', { postID: props.post?.postID });
 };
-
-
 
 </script>
 
@@ -122,14 +122,16 @@ const addOrMoveToPost = () => {
         @mouseenter="enterHover"
       >
         <TinyPost
-        v-if="!isEmpty"
+        v-if="!isEmpty && !hovered"
         v-bind="post"
         @post-hovered="postVisualizationToggle"
         />
-        <!-- <PostHoverButtons 
+        <PostHoverButtons 
         v-if="hovered"
+        :type="'garden'"
         :isLocalUser="isLocalUser"
-        @delete="deletePost"
+        :userId="post.userID"
+        @deletePost="deletePost"
         @move="movePost"
         @sprinkle="sprinklePost"
         @send="sendPost"
@@ -139,7 +141,7 @@ const addOrMoveToPost = () => {
         :waterCount="waterCount"
         :isLocalUser="isLocalUser"
         @add-or-moveTo="addOrMoveToPost"
-        /> -->
+        />
       </div>
     </div>
 </template>
@@ -147,6 +149,11 @@ const addOrMoveToPost = () => {
 
 
 <style scoped>
+
+.square-content{
+  width: 100%;
+  height: 100%;
+}
 
 .dirt{
   background-color: rgb(118, 99, 32);

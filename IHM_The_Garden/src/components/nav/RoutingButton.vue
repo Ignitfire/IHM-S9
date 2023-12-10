@@ -17,17 +17,17 @@ let color='';
 
 switch (props.type) {
 case 'garden': {
-  icon = '/icons/icon_garden.png';
+  icon = '/icons/icon_garden.svg';
   color = 'green';
   break;
 }
 case 'thread': {
-  icon = '/icons/icon_thread.png';
+  icon = '/icons/icon_thread.svg';
   color = 'green';
   break;
 }
 case 'home': {
-  icon = '/icons/icon_home.png';
+  icon = '/icons/icon_home.svg';
   color = 'yellow';
   break;
 }

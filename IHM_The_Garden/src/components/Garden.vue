@@ -100,11 +100,14 @@ if(useUserStore().localUserID === props.userID){
   grid-template-rows: repeat(4, 1fr);
   padding: 2rem;
   width: 85%;
+  max-width: 85%;
   height: 100vh;
+  max-height: 100vh;
   margin: 0 auto;
   background-color: lightgreen;
   position: relative;
 }
+
 
 .visualizationModal {
   position: fixed;

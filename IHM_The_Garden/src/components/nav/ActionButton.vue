@@ -2,10 +2,6 @@
 import { computed } from 'vue';
 
 const props = defineProps({
-  type: {
-    type: String,
-    default: "thread"
-  },
   action: {
     type: String,
     required: true
@@ -19,30 +15,40 @@ const buttonProps = computed(() => {
   let icon='';
   let color='';
 
-  switch (props.type) {
+  switch (props.action) {
   case 'settings': {
-    icon = '/icons/icon_settings.png';
+    icon = '/icons/icon_settings.svg';
     color = 'grey';
     break;
   }
   case 'send': {
-    icon = '/icons/icon_send.png';
+    icon = '/icons/icon_send.svg';
     color = 'blue';
     break;
   }
   case 'contacts': {
-    icon = '/icons/icon_openContacts.png';
+    icon = '/icons/icon_openContacts.svg';
     color = 'yellow';
     break;
   }
   case 'sprinkle': {
-    icon = '/icons/icon_sprinkle.png';
+    icon = '/icons/icon_sprinkle.svg';
     color = 'blue';
     break;
   }
   case 'addUser': {
-    icon = '/icons/icon_addUser.png';
+    icon = '/icons/icon_addUser.svg';
     color = 'yellow';
+    break;
+  }
+  case 'deletePost': {
+    icon = '/icons/icon_deletePost.svg';
+    color = 'red';
+    break;
+  }
+  case 'move': {
+    icon = '/icons/icon_movePost.svg';
+    color = 'green';
     break;
   }
   }
@@ -73,6 +79,9 @@ const buttonHandler = () => {
   padding: 0.25vw;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
 }
 
 
@@ -86,7 +95,6 @@ const buttonHandler = () => {
 }
 
 img {
-  width: 80%;
-  height: 80%;
+  height: 60%;
 }
 </style>

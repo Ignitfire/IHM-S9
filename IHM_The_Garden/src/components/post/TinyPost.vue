@@ -17,15 +17,11 @@ const prologue = props.content.substring(0,40)+"...";
 
 <template>
   <div 
-  class="post-container"
-  >
-  <div 
   class="post" 
     @mouseenter="$emit('post-hovered', { postID: props.postID });"
     >
         <p class="text">{{prologue}}</p>
     </div>
-  </div>
 </template>
 
 <style scoped>
