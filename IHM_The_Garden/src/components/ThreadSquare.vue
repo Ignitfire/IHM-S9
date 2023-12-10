@@ -26,15 +26,15 @@ const emit = defineEmits([
 
 const hovered = ref(false);
 
-const postVisualizationToggle = () => {
-  hovered.value = !hovered.value;
-  if (hovered.value) {
+const toggleVisualization = () => {
+  if (!hovered.value) {
     emit('post-hovered', {
       postID: props.post.postID,
     });
   } else {
     emit('post-not-hovered');
   }
+  hovered.value = !hovered.value;
 };
 
 const sprinklePost = () => {
@@ -49,31 +49,34 @@ const sendPost = () => {
 
 <template>
   <div class="thread-square"
-  @mouseleave="postVisualizationToggle"
-  @mouseenter="postVisualizationToggle"
   >
-
-    <TinyPost 
-    v-if="!hovered"
-      v-bind="post"
+  <TinyPost 
+  @mouseenter="toggleVisualization"
+  v-if="!hovered"
+  v-bind="post"
+  />
+  
+  <div class="post-info">
+    <p v-if="!isMainThread">Envoyé le {{post.sentDate }} par {{ post.senderID }}</p>
+  </div>
+  
+  <PostHoverButtons
+  @mouseleave="toggleVisualization"
+      v-if="hovered"
+      :type="'thread'"
+      :userId="post.userID"
+      @sprinkle="sprinklePost"
+      @send="sendPost"
       />
-      <div class="post-info">
-      <p v-if="!isMainThread">Envoyé le {{post.sentDate }} par {{ post.senderID }}</p>
-    </div>
-
-      <PostHoverButtons
-        v-if="hovered"
-        :type="'thread'"
-        :userId="post.userID"
-        @sprinkle="sprinklePost"
-        @send="sendPost"
-        />
   </div>
 </template>
 
 <style scoped>
 
 .thread-square {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   min-width: 25vh;
   min-height: 25vh;
 }
