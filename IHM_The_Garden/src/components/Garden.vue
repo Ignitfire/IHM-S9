@@ -6,12 +6,13 @@ import GardenSquare from './GardenSquare.vue';
 
 
 const props = defineProps({
-  userID: {
-    type: Number,
+  user: {
+    type: Object,
     required: true
   }
 });
 
+console.log("userID: ", props.user.userID);
 const postStore = usePostStore();
 
 const visualizedPost = ref(null);
@@ -29,7 +30,7 @@ const postVisualizationToggle = (payload) => {
       content,
       gridAreaType: payload.gridAreaType,
       locationWaterCount: payload.locationWaterCount,
-      userID: props.userID
+      userID: props.user.userID
     };
   }else{
     visualizedPost.value = null;
@@ -38,7 +39,7 @@ const postVisualizationToggle = (payload) => {
 
 
 const squares = ref([]);
-const gardenGrid = useGardenStore().getGardenByUser(props.userID).grid;
+const gardenGrid = useGardenStore().getGardenByUser(props.user.userID).grid;
 let idx = 0;
 for (let x = 0; x < 7; x++) {
   for (let y = 0; y < 4; y++) {
@@ -55,7 +56,7 @@ for (let x = 0; x < 7; x++) {
 }
 
 const isLocalUser = ref(false);
-if(useUserStore().localUserID === props.userID){
+if(useUserStore().localUserID === props.user.userID){
   isLocalUser.value = true;
 }
 

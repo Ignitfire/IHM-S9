@@ -11,7 +11,7 @@ const props= defineProps({
     required: true
   },
   creationDate: {
-    type: Date,
+    type: String,
     required: true
   },
   totalWatering: {

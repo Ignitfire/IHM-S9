@@ -15,9 +15,6 @@ export default {
     const isModalOpen = ref({});
 
     const openModal = (userID) => {
-      console.log("modalRefs at openModal: ",modalRefs.value)
-      console.log("userID at openModal: ",userID)
-      console.log("modalValue at openModal: ")
       Object.keys(isModalOpen.value).forEach(id => {
         if (id !== userID) {
           isModalOpen.value[id] = false;
@@ -28,7 +25,6 @@ export default {
       nextTick(() => {
         // Obtenez la position du bouton utilisateur
         const rect = buttonRefs.value[userID].getBoundingClientRect();
-        console.log("rect: ", rect)
         // Définissez la position de la modale
         const panelRect=document.querySelector('.panel').getBoundingClientRect();
         modalRefs.value[userID].style.top = `${rect.top}px`;
@@ -79,7 +75,6 @@ export default {
     });
 
     onUpdated(() => {
-      console.log(buttonRefs.value);
     });
 
     const userStore = useUserStore();

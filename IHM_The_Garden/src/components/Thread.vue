@@ -23,19 +23,19 @@ const localUser = userStore.getLocalUser();
 const isMainThread = ref(null);
 
 watchEffect(() => {
-  if(props.UserID == localUser.UserID){
+  if(props.userID == localUser.userID){
     isMainThread.value = true;
   }
   else{
     isMainThread.value = false;
   }
   console.log("isMainThread: ", isMainThread.value);
-  console.log("isTrue: ", props.UserID == localUser.UserID);
-  console.log("UserID: ", props.UserID);
-  console.log("localUser: ", localUser.UserID);
+  console.log("isTrue: ", props.userID == localUser.userID);
+  console.log("UserID: ", props.userID);
+  console.log("localUser: ", localUser.userID);
   if (!isMainThread.value) {
     // Si UserID est spécifié, threadPosts est égal aux posts présents dans threads
-    const threads = Threadstore.getThread(localUser.UserID, props.UserID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
+    const threads = threadstore.getThread(localUser.userID, props.userID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
     threadPosts.value = threads.map(thread => {
       const post = postStore.getPostByID(thread.postID);
       post.sentDate = thread.sentDate; // Ajoutez la sentDate au post

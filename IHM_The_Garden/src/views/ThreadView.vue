@@ -13,11 +13,10 @@ const store = useUserStore();
 const user = ref(null);
 const isLocal = ref(null);
 
-
 watchEffect(async () => {
-  let targetUserID = route.params.userID;
+  const targetUserID = route.params.userID;
   if (targetUserID) {
-    user.value = store.getUserByName(targetUserID);
+    user.value = store.getUserByID(targetUserID);
     isLocal.value = false;
   } else {
     user.value = store.getLocalUser();

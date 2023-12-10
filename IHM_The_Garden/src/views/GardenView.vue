@@ -16,14 +16,16 @@ const isLocal = ref(null);
 
 
 watchEffect(async () => {
-  const targetUserName = route.params.username;
-  if (targetUserName) {
-    user.value = store.getUserByName(targetUserName);
+
+  const targetUserID = route.params.userID;
+  if (targetUserID) {
+    user.value = store.getUserByID(parseInt(targetUserID));
     isLocal.value = false;
   } else {
     user.value = store.getLocalUser();
     isLocal.value = true;
   }
+
 });
 
 const isPanelOpen = ref(false);
@@ -39,7 +41,7 @@ const togglePanel = () => {
   <main v-if="user" class="container">
     <NavBar :user="user" :isLocal="isLocal" :isGarden="true" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel" @togglePanel="togglePanel"/>
     <PanelAndModals :user="user" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
-    <Garden :userID="user.userID"/>
+    <Garden :user="user"/>
     <div class="modal-container" ref="modalContainerRef"></div>
     </main>
 </template>
