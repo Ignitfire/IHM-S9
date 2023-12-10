@@ -15,9 +15,9 @@ const isLocal = ref(null);
 
 
 watchEffect(async () => {
-  let targetUserName = route.params.username;
-  if (targetUserName) {
-    user.value = store.getUserByName(targetUserName);
+  let targetUserID = route.params.userID;
+  if (targetUserID) {
+    user.value = store.getUserByName(targetUserID);
     isLocal.value = false;
   } else {
     user.value = store.getLocalUser();

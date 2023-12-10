@@ -10,7 +10,7 @@ const router = createRouter({
       component: () => import('../views/GardenView.vue')
     },
     {
-      path: '/garden/:username',
+      path: '/garden/:userID',
       name: 'visitGarden',
       props: true,
       component: () => import('../views/GardenView.vue')
@@ -21,7 +21,7 @@ const router = createRouter({
       component: () => import('../views/ThreadView.vue')
     },
     {
-      path: '/thread/:username',
+      path: '/thread/:userID',
       name: 'threadWithUser',
       props: true,
       component: () => import('../views/ThreadView.vue')

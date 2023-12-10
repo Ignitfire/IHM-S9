@@ -19,7 +19,7 @@ const createUserStore = () => {
     userID: 0,
     userName: "Jean de la fontaine",
     userPseudo: "@JeanDLF",
-    following: Array.from({ length: 48 }, (_, index) => index + 3),
+    following: Array.from({ length: 46 }, (_, index) => index + 3),
     creationDate: getRandomDate(), 
     totalWatering: 600,
     totalPosting: 1620,

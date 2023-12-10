@@ -111,8 +111,8 @@ export default {
         </button>
         <teleport to=".modal-container">
           <div v-if="isModalOpen[userID]" class="modal" :ref="el => { if (el) modalRefs[userID] = el }">
-            <RoutingButton class="modal-button" type="thread" :path="'/thread/User' + userID" @click="closeModalAndPanel(userID)"/>
-            <RoutingButton class="modal-button" type="garden" :path="'/garden/User' + userID" @click="closeModalAndPanel(userID)"/>
+            <RoutingButton class="modal-button" type="thread" :path="'/thread/' + userID" @click="closeModalAndPanel(userID)"/>
+            <RoutingButton class="modal-button" type="garden" :path="'/garden/' + userID" @click="closeModalAndPanel(userID)"/>
           </div>
         </teleport>
       </div>
