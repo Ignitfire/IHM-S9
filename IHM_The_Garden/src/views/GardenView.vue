@@ -40,6 +40,7 @@ const togglePanel = () => {
     <NavBar :user="user" :isLocal="isLocal" :isGarden="true" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel" @togglePanel="togglePanel"/>
     <PanelAndModals :user="user" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
     <Garden :userID="user.userID"/>
+    <div class="modal-container" ref="modalContainerRef"></div>
     </main>
 </template>
 

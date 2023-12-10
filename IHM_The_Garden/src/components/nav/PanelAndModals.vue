@@ -1,5 +1,5 @@
 <script>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount, nextTick, onUpdated } from 'vue';
 import RoutingButton from '@/components/nav/RoutingButton.vue';
 import { useUserStore } from '@/stores/allStores';
   
@@ -10,24 +10,38 @@ export default {
   props: ['user', 'isPanelOpen', 'togglePanel'],
   setup(props) {
     const modalRefs = ref({});
+    const buttonRefs = ref({});
     const panelRef = ref(null);
     const isModalOpen = ref({});
-  
+
     const openModal = (userID) => {
+      console.log("modalRefs at openModal: ",modalRefs.value)
+      console.log("userID at openModal: ",userID)
+      console.log("modalValue at openModal: ")
       Object.keys(isModalOpen.value).forEach(id => {
         if (id !== userID) {
           isModalOpen.value[id] = false;
         }
       });
       isModalOpen.value[userID] = true;
+
+      nextTick(() => {
+        // Obtenez la position du bouton utilisateur
+        const rect = buttonRefs.value[userID].getBoundingClientRect();
+        console.log("rect: ", rect)
+        // Définissez la position de la modale
+        modalRefs.value[userID].style.top = `${rect.top}px`;
+        modalRefs.value[userID].style.left = `${rect.right+15}px`;
+      });
     };
+
+    
   
     const closeModal = (userID) => {
       isModalOpen.value[userID] = false;
     };
   
-    const closeModalAndPanel = (userID) => {
-      closeModal(userID);
+    const closeModalAndPanel = (userID) => {closeModal(userID);
       props.togglePanel();
     };
   
@@ -63,6 +77,10 @@ export default {
       document.removeEventListener('mouseup', handleMouseup);
     });
 
+    onUpdated(() => {
+      console.log(buttonRefs.value);
+    });
+
     const userStore = useUserStore();
 
     const getUserById = (id) => {
@@ -72,6 +90,7 @@ export default {
   
     return {
       modalRefs,
+      buttonRefs,
       panelRef,
       isModalOpen,
       openModal,
@@ -86,29 +105,38 @@ export default {
 <template>
     <div v-if="isPanelOpen" class="panel" ref="panelRef">
       <div v-for="userID in user.following" :key="userID" class="user">
-        <button class="user-button" @click="openModal(userID)">
+        <button class="user-button" :ref="el => { if (el) buttonRefs[userID] = el }" @click="openModal(userID)">
           User{{ userID }}
         </button>
-        <div v-if="isModalOpen[userID]" class="modal" :ref="el => { if (el) modalRefs[userID] = el }">
-          <RoutingButton class="modal-button" type="thread" :path="'/thread/User' + userID" @click="closeModalAndPanel(userID)"/>
-          <RoutingButton class="modal-button" type="garden" :path="'/garden/User' + userID" @click="closeModalAndPanel(userID)"/>
-        </div>
+        <teleport to=".modal-container">
+          <div v-if="isModalOpen[userID]" class="modal" :ref="el => { if (el) modalRefs[userID] = el }">
+            <RoutingButton class="modal-button" type="thread" :path="'/thread/User' + userID" @click="closeModalAndPanel(userID)"/>
+            <RoutingButton class="modal-button" type="garden" :path="'/garden/User' + userID" @click="closeModalAndPanel(userID)"/>
+          </div>
+        </teleport>
       </div>
     </div>
 </template>
 
+
+
+
 <style scoped>
 .modal {
-  position: fixed;
+  position: absolute;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  left: +27vw  ; /* Positionne la modale à 50px à droite du bouton */
   background-color:bisque;
   height: 10vh;
   width: 8vw;
   /* autres styles */
+}
+.modal-button{
+  width: 100%;
+  margin:5%;
+  height:80%;
 }
 .panel{
   position: fixed;
@@ -126,7 +154,7 @@ export default {
   padding: 1vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+
 }
 
 .user{
@@ -139,12 +167,6 @@ export default {
   position: relative;
   height: 10vh;
   width: 10vw;
-}
-
-.modal-button{
-  width: 100%;
-  margin:5%;
-  height:80%;
 }
 </style>
   
