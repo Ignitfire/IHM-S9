@@ -18,15 +18,29 @@ const postStore = usePostStore();
 const userStore = useUserStore();
 
 const threadPosts = ref(null);
-const localUser = userStore.getLocalUser();
+const localUser = UserStore.getLocalUser();
+const isMainThread = ref(null);
 
 watchEffect(() => {
-  if (props.userID!=localUser.userID) {
-    // Si userID est spécifié, threadPosts est égal aux posts présents dans threads
-    const threads = threadstore.getThread(localUser.userID, props.userID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
+  if(props.UserID == localUser.UserID){
+    isMainThread.value = true;
+  }
+  else{
+    isMainThread.value = false;
+  }
+  console.log("isMainThread: ", isMainThread.value)
+  console.log("isTrue: ", props.UserID == localUser.UserID)
+  console.log("UserID: ", props.UserID)
+  console.log("localUser: ", localUser.UserID)
+  if (!isMainThread.value) {
+    // Si UserID est spécifié, threadPosts est égal aux posts présents dans threads
+    const threads = Threadstore.getThread(localUser.UserID, props.UserID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
     threadPosts.value = threads.map(thread => {
       const post = postStore.getPostByID(thread.postID);
       post.sentDate = thread.sentDate; // Ajoutez la sentDate au post
+      console.log("sentDate: ", post.sentDate)
+      post.senderID = thread.senderID; // Ajoutez le SenderID au post 
+      console.log("senderID: ", post.senderID)
       return post;
     });
   } else {
@@ -98,7 +112,7 @@ onUpdated(() => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="thread-container">
     <div id="visualization">
     <div 
       v-if="visualizedPost !== null"
@@ -111,13 +125,15 @@ onUpdated(() => {
     </div>
   <div v-if="threadPosts" class="thread">
     <div class="post-sent-container" v-for="post in threadPosts" :key="post.postID">
-      <h2>Crée par {{post.userID}} Envoyé par {{ props.userID }}</h2>
       <TinyPost 
       v-bind="post"
       @post-hovered="postVisualizationToggle"
       @post-not-hovered="postVisualizationToggle"
       />
-      <p>Envoyé le {{post.sentDate }}</p>
+      <div class="post-info">
+      <p>post crée le {{ post.creationDate }} par {{ post.userID }}</p>
+      <p v-if="!isMainThread">Envoyé le {{post.sentDate }} par {{ post.senderID }}</p>
+      </div>
     </div>
   </div>
   </div>
@@ -125,8 +141,15 @@ onUpdated(() => {
 
 <style scoped>
 
-.container {
+.thread-container {
   width: 85vw;
+}
+.post-info{
+  display: flex;
+  flex-direction: column;
+  justify-content: center ;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .thread {
@@ -135,11 +158,14 @@ onUpdated(() => {
   align-items: end;
   gap: 1rem;
   width: 100%;
+  min-height: 100vh;
   background-color:  lightcyan;
 }
 
 .post-sent-container{
   width: fit-content;
+  display: flex;
+  flex-direction: row;
 }
 
 .visualizationModal {

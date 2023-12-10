@@ -12,13 +12,17 @@ const route = useRoute();
 const store = useUserStore();
 
 const user = ref(null);
+const isLocal = ref(null);
+
 
 watchEffect(async () => {
   const targetUserName = route.params.username;
   if (targetUserName) {
     user.value = store.getUserByName(targetUserName);
+    isLocal.value = false;
   } else {
     user.value = store.getLocalUser();
+    isLocal.value = true;
   }
 });
 
