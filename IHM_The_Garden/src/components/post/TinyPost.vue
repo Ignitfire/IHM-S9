@@ -1,16 +1,6 @@
 <script setup>
-import TimeCounter from './TimeCounter.vue';
-import WaterCounter from '../WaterCounter.vue';
-import { onMounted, ref } from 'vue';
-
-
-
 
 const props= defineProps({
-  droplets: {
-    type: Number,
-    required: true
-  },
   content: {
     type: String,
     required: true

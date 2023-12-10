@@ -1,7 +1,7 @@
 <script>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import RoutingButton from '@/components/nav/RoutingButton.vue';
-import { useUserStore } from '@/stores/users';
+import { useUserStore } from '@/stores/allStores';
   
 export default {
   components: {

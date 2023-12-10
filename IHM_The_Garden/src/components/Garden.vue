@@ -1,19 +1,17 @@
 <script setup>
-import { usePostStore } from '../stores/posts';
-import Post from './post/Post.vue';
-import { computed, ref } from 'vue';
+import { useGardenStore, usePostStore, useUserStore } from '../stores/allStores.js';
+import { ref, defineProps } from 'vue';
 import PostVisualization from './post/PostVisualization.vue';
+import GardenSquare from './GardenSquare.vue';
 
 
 const props = defineProps({
-  UserID: {
+  userID: {
     type: Number,
     required: true
   }
 });
-
-const store = usePostStore();
-const userPosts = computed(() => store.getPostsByUser(props.UserID));
+const postStore = usePostStore();
 
 const visualizedPost = ref(null);
 const isLeftSide = ref(null);
@@ -21,22 +19,33 @@ const isLeftSide = ref(null);
 const postVisualizationToggle = (payload) => {
   if(visualizedPost.value === null){
     isLeftSide.value = payload.isLeftSide;
-    visualizedPost.value = store.getPostByID(payload.postID);
+    visualizedPost.value = postStore.getPostByID(payload.postID);
   }else{
     visualizedPost.value = null;
   }
 };
 
-const getPostForLocation = (x, y) => {
-  return userPosts.value.find(post => post.location.x === x && post.location.y === y);
-};
 
-const postsByLocations = [];
-
+const squares = ref([]);
+const gardenGrid = useGardenStore().getGardenByUser(props.userID).grid;
+let idx = 0;
 for (let x = 0; x < 7; x++) {
   for (let y = 0; y < 4; y++) {
-    postsByLocations[x] = getPostForLocation( x, y );
+    const square = gardenGrid[x][y];
+    const post = square.postID === null ? {}: postStore.getPostByID(square.postID);
+    squares.value.push({
+      idx: idx,
+      location: {x, y},
+      post: post,
+      waterCount: square.waterCount
+    });
+    idx++;
   }
+}
+
+const isLocalUser = ref(false);
+if(useUserStore().localUserID === props.userID){
+  isLocalUser.value = true;
 }
 
 </script>
@@ -61,11 +70,14 @@ for (let x = 0; x < 7; x++) {
       />
     </div>
     </div>
-    <Post
-      v-for="post in userPosts"
-      :key="post.postID"
-      v-bind="post"
-      :style="{ gridArea: `${post.location.y + 1} / ${post.location.x + 1}` }"
+    <GardenSquare
+      v-for="square in squares"
+      :key="square.idx"
+      :post="square.post"
+      :location="square.location"
+      :waterCount="square.waterCount"
+      :isLocalUser="isLocalUser"
+      :style="{ gridArea: `${square.location.y + 1} / ${square.location.x + 1}` }"
       @post-hovered="postVisualizationToggle"
       @post-not-hovered="postVisualizationToggle"
     />

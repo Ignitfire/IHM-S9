@@ -5,29 +5,27 @@ import Post from '@/components/post/Post.vue';
 import Garden from '@/components/Garden.vue';
 import Thread from '@/components/Thread.vue';
 import RoutingButton from '@/components/nav/RoutingButton.vue';
-import { useUserStore } from '../stores/users';
+import { useUserStore } from '../stores/allStores';
 import ActionButton from '@/components/nav/ActionButton.vue';
 import { ref, onMounted, VueElement } from 'vue';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
-import { onBeforeUnmount } from 'vue';
-import PanelAndModals from '@/components/nav/PanelAndModals.vue';
 import NavBar from '@/components/nav/NavBar.vue';
 
 const route = useRoute();
 const store = useUserStore();
 
-const User = ref(null);
+const user = ref(null);
 const isLocal = ref(null);
 
 
 watchEffect(async () => {
   let targetUserName = route.params.username;
   if (targetUserName) {
-    User.value = store.getUserByName(targetUserName);
+    user.value = store.getUserByName(targetUserName);
     isLocal.value = false;
   } else {
-    User.value = store.getLocalUser();
+    user.value = store.getLocalUser();
     isLocal.value = true;
   }
 });
@@ -40,9 +38,9 @@ const togglePanel = () => {
 </script>
 
 <template>
-  <main v-if="User" class="container">
-    <NavBar :User="User" :isLocal="isLocal" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
-    <Thread :UserID="User.UserID"/>
+  <main v-if="user" class="container">
+    <NavBar :user="user" :isLocal="isLocal" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
+    <Thread :userID="user.userID"/>
   </main>
 </template>
 

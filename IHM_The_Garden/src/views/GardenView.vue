@@ -1,31 +1,23 @@
 <script setup>
-import TimeCounter from '@/components/post/TimeCounter.vue';
-import WaterCounter from '@/components/WaterCounter.vue';
-import Post from '@/components/post/Post.vue';
 import Garden from '@/components/Garden.vue';
-import Thread from '@/components/Thread.vue';
-import RoutingButton from '@/components/nav/RoutingButton.vue';
-import { useUserStore } from '../stores/users';
-import ActionButton from '@/components/nav/ActionButton.vue';
-import { ref, onMounted, VueElement } from 'vue';
+import { useUserStore } from '../stores/allStores';
+import { ref } from 'vue';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
-import { onBeforeUnmount } from 'vue';
-import PanelAndModals from '@/components/nav/PanelAndModals.vue';
 
 
 
 const route = useRoute();
 const store = useUserStore();
 
-const User = ref(null);
+const user = ref(null);
 
 watchEffect(async () => {
   const targetUserName = route.params.username;
   if (targetUserName) {
-    User.value = store.getUserByName(targetUserName);
+    user.value = store.getUserByName(targetUserName);
   } else {
-    User.value = store.getLocalUser();
+    user.value = store.getLocalUser();
   }
 });
 
@@ -38,36 +30,36 @@ const togglePanel = () => {
 </script>
 
 <template>
-  <main v-if="User" class="container">
+  <main v-if="user" class="container">
     <div class="navbar">
       <div class="top">
         <div class="highUI">
-          <img class ="avatar" :src="User.AvatarPicture"/>
+          <img class ="avatar" :src="user.AvatarPicture"/>
           <ActionButton type="settings" size="small"/>
         </div>
         <div class="identity">
-          <h1>{{User.UserPdeudo}}</h1>
-          <h2>{{User.UserName}}</h2>
+          <h1>{{user.userPdeudo}}</h1>
+          <h2>{{user.userName}}</h2>
         </div>
         <div class="lowUI">
           <WaterCounter :droplets="456"/>
         </div>
         <div class = "infos">
-          <p>Compte crée le {{ User.CreationDate }}</p>
-          <p>Arrosé {{ User.TotalWatering }} fois</p>
-          <p>suivi par {{ User.TotalFollowers }} personnes</p>
-          <p>{{ User.TotalFollowing }} personnes suivs</p>
-          <p>a posté {{ User.TotalPosting }} fois</p>
+          <p>Compte crée le {{ user.CreationDate }}</p>
+          <p>Arrosé {{ user.TotalWatering }} fois</p>
+          <p>suivi par {{ user.TotalFollowers }} personnes</p>
+          <p>{{ user.TotalFollowing }} personnes suivs</p>
+          <p>a posté {{ user.TotalPosting }} fois</p>
         </div>
       </div>
       <div class = "mediumButtons">
         <RoutingButton type="home" size="medium" path="/"/>
         <ActionButton type="contacts" size="medium" :action="togglePanel"/>
-        <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
+        <PanelAndModals :user="user" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
      </div>
       <RoutingButton type="thread" size="big" path="/thread/"/>
     </div>
-    <Garden :UserID="User.UserID"/>
+    <Garden :userID="user.userID"/>
     </main>
 </template>
 
