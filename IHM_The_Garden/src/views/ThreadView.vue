@@ -40,14 +40,15 @@ const togglePanel = () => {
 </script>
 
 <template>
-  <main v-if="User" class="container">
-    <NavBar :User="User" :isLocal="isLocal" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
+  <main v-if="User" class="main-container">
+    <NavBar :User="User" :isLocal="isLocal" :isGarden="false" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel" @togglePanel="togglePanel"/>
+    <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
     <Thread :UserID="User.UserID"/>
   </main>
 </template>
 
 <style scoped>
-.container {
+.main-container {
   display: flex;
   width: 100%;
   position: relative;

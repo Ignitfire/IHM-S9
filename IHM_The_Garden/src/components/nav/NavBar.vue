@@ -14,6 +14,10 @@ const props = defineProps({
         type: Boolean,
         required: true
     },
+    isGarden: {
+        type: Boolean,
+        required: true
+    },
   isPanelOpen: {
     type: Boolean,
     required: true
@@ -25,16 +29,12 @@ const props = defineProps({
 });
 
 const emit = defineEmits([
-  'post-hovered', 
+  'togglePanel', 
 ]);
 
-const enzoHandler = () => {
-  console.log('señoritas');
+const togglePanel = () => {
+    emit('togglePanel');
 };
-
-const targetUserName = props.isLocal
-
-
 
 </script>
 
@@ -43,26 +43,41 @@ const targetUserName = props.isLocal
   <div class="navbar">
       <div class="top">
         <div class="highUI">
-          <h1 v-if="!targetUserName" class="threadTitle">Fil Principal</h1>
+          <h1 v-if="isLocal && !isGarden" class="threadTitle">Fil Principal</h1>
 
-          <img v-if="targetUserName" class ="avatar" :src="User.AvatarPicture"/>
+          <img v-if="!isLocal || isGarden" class ="avatar" :src="User.AvatarPicture"/>
           <ActionButton type="settings" class="settings" size="small"/>
         </div>
         <div class="identity">
           <h1>{{props.User.UserPdeudo}}</h1>
           <h2>{{props.User.UserName}}</h2>
         </div>
+        <div v-if="isGarden" class="lowUI">
+        <div class="water">
+          <WaterCounter :droplets="456"/>
+        </div>
+        <div class = "infos">
+          <p>Compte crée le {{ User.CreationDate }}</p>
+          <p>Arrosé {{ User.TotalWatering }} fois</p>
+          <p>suivi par {{ User.TotalFollowers }} personnes</p>
+          <p>{{ User.TotalFollowing }} personnes suivs</p>
+          <p>a posté {{ User.TotalPosting }} fois</p>
+        </div>
+        </div>
       </div>
       <div class = "mediumButtons">
-        <RoutingButton type="home" size="medium" path="/thread/"/>
-        <ActionButton type="contacts" size="medium" action="enzo" @enzo="enzoHandler"/>
-        <!-- <PanelAndModals :User="User" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/> -->
+        <RoutingButton v-if="isGarden" type="home" size="medium" path="/thread/"/>
+        <RoutingButton v-if="!isGarden" type="home" size="medium" path="/"/>
+
+        <ActionButton type="contacts" size="medium" action="togglePanel" @togglePanel="togglePanel"/>
       </div>
-      <RoutingButton type="garden" size="big" path="/"/>
+      <RoutingButton v-if="isGarden" type="thread" size="big" path="/thread/"/>
+      <RoutingButton v-if="!isGarden" type="garden" size="big" path="/"/>
     </div>
 </template>
 
 <style scoped>
+
 .navbar {
   display: flex;
   flex-direction: column;
@@ -76,17 +91,6 @@ const targetUserName = props.isLocal
   bottom:0;
   /* Ajoutez vos styles de navbar ici */
 }
-.avatar{
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-}
-.settings{
-  position: absolute;
-  top: 0;
-  left: 10vw;
-  margin: 0.5rem;
-}
 .highUI {
   position: absolute;
   width: 15%;
@@ -96,6 +100,20 @@ const targetUserName = props.isLocal
   justify-content: space-between;
   padding: 0.5rem;
 }
+
+.avatar{
+  width: 7rem;
+  height: 7rem;
+  border-radius: 50%;
+}
+
+.settings{
+  position: absolute;
+  top: 0;
+  left: 10vw;
+  margin: 0.5rem;
+}
+
 
 .identity{
   padding-left: 15px;
@@ -117,11 +135,34 @@ const targetUserName = props.isLocal
   justify-content: space-evenly;
   height: 90%;
 }
+.water{
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  height: 2rem;
+}
 .mediumButtons{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   height: 5rem;
 }
+.infos{
+  border-radius: 10px;
+  background-color: lightgoldenrodyellow;
+  padding-left: 0.5rem;
+  margin: 1rem;
+}
 
+h1{
+  font-size: 1.5rem;
+}
+h2{
+  font-size: 1.2rem;
+
+}
+p{
+  font-size: 0.9rem;
+}
 </style>

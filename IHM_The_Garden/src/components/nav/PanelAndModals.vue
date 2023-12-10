@@ -84,7 +84,6 @@ export default {
 </script>
 
 <template>
-  <div>
     <div v-if="isPanelOpen" class="panel" ref="panelRef">
       <div v-for="userID in User.Following" :key="userID" class="user-button">
         <button class="modal-button" @click="openModal(userID)">
@@ -96,7 +95,6 @@ export default {
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
@@ -110,7 +108,7 @@ export default {
   /* autres styles */
 }
 .panel{
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 15vw;
   width: 8rem;
