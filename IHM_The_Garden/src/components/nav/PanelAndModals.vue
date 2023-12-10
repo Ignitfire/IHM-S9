@@ -7,7 +7,7 @@ export default {
   components: {
     RoutingButton
   },
-  props: ['User', 'isPanelOpen', 'togglePanel'],
+  props: ['user', 'isPanelOpen', 'togglePanel'],
   setup(props) {
     const modalRefs = ref({});
     const panelRef = ref(null);
