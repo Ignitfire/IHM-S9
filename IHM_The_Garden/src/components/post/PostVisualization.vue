@@ -37,7 +37,7 @@ const props= defineProps({
 });
 
 const userPseudo = computed(() => {
-  return useUserStore().getUserByID(props.userID).pseudo;
+  return useUserStore().getUserByID(props.userID).userPseudo;
 });
 
 const timeLeft = computed(() => {
@@ -83,36 +83,28 @@ onBeforeUnmount(() => {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   border: 1px solid black;
   background-color: whitesmoke;
   border-radius: 0.5rem;
   padding: 1.5rem;
   margin: 0.5rem 1rem;
-  height: 50%; /* Adjust as needed */
-  width: 90%; /* Adjust as needed */
+  height: 50%;
+  width: 90%;
   z-index: 2;
 }
-.top-left, .top-right, .bottom-left, .bottom-right {
-  position: absolute;
-}
-.top-left {
-  top: 1.5rem;
-  left: 1.5rem;
-}
-.top-right {
-  top: 1.5rem;
-  right: 1.5rem;
+.top, .middle, .bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 .bottom-left {
   font-size: 0.8rem;
-  bottom: 1.5rem;
-  left: 1.5rem;
 }
 .bottom-right {
   font-size: 0.8rem;
-  bottom: 1.5rem;
-  right: 1.5rem;
 }
 </style>
