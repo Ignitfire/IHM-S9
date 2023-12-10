@@ -27,7 +27,8 @@ const postVisualizationToggle = (payload) => {
       creationDate,
       content,
       gridAreaType: payload.gridAreaType,
-      locationWaterCount: payload.locationWaterCount
+      locationWaterCount: payload.locationWaterCount,
+      userID: props.userID
     };
   }else{
     visualizedPost.value = null;
