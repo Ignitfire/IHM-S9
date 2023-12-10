@@ -1,23 +1,21 @@
 <script setup>
-import { onBeforeUpdate, onMounted, onUpdated, ref, watchEffect } from 'vue';
-import { useThreadStore } from '../stores/threads';
-import { usePostStore } from '../stores/posts';
-import { useUserStore } from '../stores/users';
-import Post from './post/Post.vue';
+import { onMounted, onUpdated, ref, watchEffect } from 'vue';
+import { useThreadStore, usePostStore, useUserStore } from '../stores/allStores';
+import TinyPost from './post/TinyPost.vue';
 import PostVisualization from './post/PostVisualization.vue';
 import {gsap} from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const props = defineProps({
-  UserID: {
+  userID: {
     type: Number,
     required: true
   }
 });
 
-const Threadstore = useThreadStore();
-const PostStore = usePostStore();
-const UserStore = useUserStore();
+const threadstore = useThreadStore();
+const postStore = usePostStore();
+const userStore = useUserStore();
 
 const threadPosts = ref(null);
 const localUser = UserStore.getLocalUser();
@@ -38,7 +36,7 @@ watchEffect(() => {
     // Si UserID est spécifié, threadPosts est égal aux posts présents dans threads
     const threads = Threadstore.getThread(localUser.UserID, props.UserID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
     threadPosts.value = threads.map(thread => {
-      const post = PostStore.getPostByID(thread.postID);
+      const post = postStore.getPostByID(thread.postID);
       post.sentDate = thread.sentDate; // Ajoutez la sentDate au post
       console.log("sentDate: ", post.sentDate)
       post.senderID = thread.senderID; // Ajoutez le SenderID au post 
@@ -46,14 +44,14 @@ watchEffect(() => {
       return post;
     });
   } else {
-    // Si UserID n'est pas spécifié, threadPosts est égal aux posts présents dans les utilisateurs correspondant aux ID de following
-    const following = UserStore.getFollowingByID(props.UserID);
+    // Si userID n'est pas spécifié, threadPosts est égal aux posts présents dans les utilisateurs correspondant aux ID de following
+    const following = userStore.getFollowingByID(props.userID);
     const posts = [];
     for (const userID of following) {
-      posts.push(...PostStore.getPostsByUser(userID));
+      posts.push(...postStore.getPostsByUser(userID));
     }
     // Trie les posts par date de création
-    posts.sort((a, b) => new Date(b.CreationDate) - new Date(a.CreationDate));
+    posts.sort((a, b) => new Date(b.creationDate) - new Date(a.creationDate));
     threadPosts.value = posts;
   }
 });
@@ -64,7 +62,7 @@ const postsIds = ref([]);
 
 const postVisualizationToggle = (payload) => {
   if(visualizedPost.value === null){
-    visualizedPost.value = PostStore.getPostByID(payload.postID);
+    visualizedPost.value = postStore.getPostByID(payload.postID);
   }else{
     visualizedPost.value = null;
   }
@@ -127,7 +125,7 @@ onUpdated(() => {
     </div>
   <div v-if="threadPosts" class="thread">
     <div class="post-sent-container" v-for="post in threadPosts" :key="post.postID">
-      <Post 
+      <TinyPost 
       v-bind="post"
       @post-hovered="postVisualizationToggle"
       @post-not-hovered="postVisualizationToggle"

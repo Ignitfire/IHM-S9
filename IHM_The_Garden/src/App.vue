@@ -1,5 +1,8 @@
 <script setup>
 import { RouterView } from 'vue-router';
+import { useUserStore } from './stores/allStores.js';
+import { computed } from 'vue';
+
 </script>
 
 <template>

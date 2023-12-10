@@ -1,12 +1,12 @@
 <script setup>
 import { onMounted, ref } from 'vue';
-import Post from './post/Post.vue';
+import TinyPost from './post/TinyPost.vue';
 
 const props = defineProps({
   post: {
     type: Object,
     required: true,
-    default: null
+    default: () => ({})
   },
   location: {
     type: Object,
@@ -21,6 +21,8 @@ const props = defineProps({
     required: true
   },
 });
+
+const isEmpty = ref(props.post.postID === undefined);
 
 const isLeftSide = ref(true);
 const gridAreaType = ref(null);
@@ -118,12 +120,12 @@ const addOrMoveToPost = () => {
         @mouseleave="quitHover"
         @mouseenter="enterHover"
       >
-        <Post
-        v-if="post !== null"
+        <TinyPost
+        v-if="!isEmpty"
         v-bind="post"
         @post-hovered="postVisualizationToggle"
         />
-        <PostHoverButtons 
+        <!-- <PostHoverButtons 
         v-if="hovered"
         :isLocalUser="isLocalUser"
         @delete="deletePost"
@@ -132,11 +134,11 @@ const addOrMoveToPost = () => {
         @send="sendPost"
         />
         <HoverOnEmptySquare
-        v-if="post === null && hovered"
+        v-if="isEmpty && hovered"
         :waterCount="waterCount"
         :isLocalUser="isLocalUser"
         @add-or-moveTo="addOrMoveToPost"
-        />
+        /> -->
       </div>
     </div>
 </template>

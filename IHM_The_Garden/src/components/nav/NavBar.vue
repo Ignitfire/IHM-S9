@@ -1,6 +1,6 @@
 <script setup>
 import { defineProps, defineEmits } from 'vue';
-import { useUserStore } from '@/stores/users';
+import { useUserStore } from '@/stores/allStores';
 import RoutingButton from '@/components/nav/RoutingButton.vue';
 import ActionButton from '@/components/nav/ActionButton.vue';
 import PanelAndModals from '@/components/nav/PanelAndModals.vue';
