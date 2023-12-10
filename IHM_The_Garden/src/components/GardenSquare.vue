@@ -22,17 +22,13 @@ const props = defineProps({
   },
 });
 
+
 const isEmpty = ref(props.post.postID === undefined);
 
-const isLeftSide = ref(true);
+const isLeftSide = ref(props.location.x < 3);
 const gridAreaType = ref(null);
 
 onMounted(() => {
-  if (props.location.x < 3) {
-    isLeftSide.value = true;
-  } else {
-    isLeftSide.value = false;
-  }
   if(props.location.x === 0 || props.location.x === 6) {
     gridAreaType.value = 'dirt';
   } else if (props.location.x === 1 || props.location.x === 5) {
@@ -61,7 +57,12 @@ const postVisualizationToggle = () => {
     emit('post-not-hovered');
     hovered.value = false;
   }else{
-    emit('post-hovered', { postID: props.post.postID, isLeftSide: isLeftSide.value });
+    emit('post-hovered', { 
+      isLeftSide: isLeftSide.value, 
+      postID: props.post.postID, 
+      gridAreaType: gridAreaType.value, 
+      locationWaterCount: props.waterCount 
+    });
     hovered.value = true;
   }
 };

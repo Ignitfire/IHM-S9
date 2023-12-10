@@ -28,11 +28,16 @@ const togglePanel = () => {
   isPanelOpen.value = !isPanelOpen.value;
 };
 
+const isLocal = ref(false);
+if(useUserStore().localUserID === user.value.userID){
+  isLocal.value = true;
+}
+
 </script>
 
 <template>
   <main v-if="user" class="container">
-    <NavBar :user="user" :isLocal="isLocal" :isden="true" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel" @togglePanel="togglePanel"/>
+    <NavBar :user="user" :isLocal="isLocal" :isGarden="true" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel" @togglePanel="togglePanel"/>
     <PanelAndModals :user="user" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
     <Garden :userID="user.userID"/>
     </main>

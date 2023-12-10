@@ -239,7 +239,7 @@ const getGardenGrid = (userID) => {
       }
       grid[i].push({
         postID: postID,
-        watering: Math.floor(Math.random() * 100) + 5,
+        waterCount: Math.floor(Math.random() * 100) + 5,
       });
     }
   }

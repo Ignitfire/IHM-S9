@@ -19,7 +19,16 @@ const isLeftSide = ref(null);
 const postVisualizationToggle = (payload) => {
   if(visualizedPost.value === null){
     isLeftSide.value = payload.isLeftSide;
-    visualizedPost.value = postStore.getPostByID(payload.postID);
+    const post = postStore.getPostByID(payload.postID);
+    const { postID, totalWatering, creationDate, content } = post;
+    visualizedPost.value = {
+      postID,
+      totalWatering,
+      creationDate,
+      content,
+      gridAreaType: payload.gridAreaType,
+      locationWaterCount: payload.locationWaterCount
+    };
   }else{
     visualizedPost.value = null;
   }

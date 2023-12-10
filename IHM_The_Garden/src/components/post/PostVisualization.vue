@@ -1,38 +1,46 @@
 <script setup>
 import TimeCounter from './TimeCounter.vue';
 import WaterCounter from '../WaterCounter.vue';
-import { onBeforeUnmount, onMounted } from 'vue';
+import { computed, onBeforeUnmount, onMounted } from 'vue';
 import {gsap} from 'gsap';
 
 const props= defineProps({
-  droplets: {
-    type: Number,
-    required: true
-  },
-  timeLeft: {
-    type: Number,
-    required: true
-  },
   content: {
     type: String,
     required: true
   },
   creationDate: {
-    type: String,
+    type: Date,
     required: true
   },
   totalWatering: {
     type: Number,
     required: true
   },
-  location: {
-    type: Object,
-    required: false
-  },
   postID: {
     type: Number,
     required: true
   },
+  locationWaterCount: {
+    type: Number,
+    required: true
+  },
+  gridAreaType: {
+    type: String,
+    required: true
+  },
+});
+
+const timeLeft = computed(() => {
+  if (props.gridAreaType === 'dirt'){
+    return props.locationWaterCount * 1000;
+  } else if (props.gridAreaType === 'grass'){
+    return props.locationWaterCount * 10000;
+  } else if (props.gridAreaType === 'forest'){
+    return props.locationWaterCount * 100000;
+  } else {
+    return 99999999; 
+  }
 });
 
 onMounted(() => {
@@ -47,8 +55,8 @@ onBeforeUnmount(() => {
 <template>
     <div class="postVisualization">
         <div class="top">
-          <TimeCounter :time="props.timeLeft" class="top-left"></TimeCounter>
-          <WaterCounter :droplets="props.droplets" class="top-right"></WaterCounter>
+          <TimeCounter :time="timeLeft" class="top-left"></TimeCounter>
+          <WaterCounter :droplets="props.locationWaterCount" class="top-right"></WaterCounter>
         </div>
         <div class="middle">
           <p>{{props.content}}</p>

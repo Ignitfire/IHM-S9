@@ -7,18 +7,18 @@ import PanelAndModals from '@/components/nav/PanelAndModals.vue';
 import WaterCounter from '@/components/WaterCounter.vue';
 
 const props = defineProps({
-  User: {
+  user: {
     type: Object,
     required: true
   },
-    isLocal: {
-        type: Boolean,
-        required: true
-    },
-    isGarden: {
-        type: Boolean,
-        required: true
-    },
+  isLocal: {
+    type: Boolean,
+    required: true
+  },
+  isGarden: {
+    type: Boolean,
+    required: true
+  },
   isPanelOpen: {
     type: Boolean,
     required: true
@@ -34,7 +34,7 @@ const emit = defineEmits([
 ]);
 
 const togglePanel = () => {
-    emit('togglePanel');
+  emit('togglePanel');
 };
 
 </script>
@@ -44,20 +44,20 @@ const togglePanel = () => {
   <div class="navbar">
         <div class="highUI">
           <h1 v-if="isLocal && !isGarden" class="threadTitle">Fil Principal</h1>
-          <img v-if="!isLocal || isGarden" class ="avatar" :src="User.AvatarPicture"/>
+          <img v-if="!isLocal || isGarden" class ="avatar" :src="user.avatarPicture"/>
             <ActionButton type="settings" class="settings"/>
         </div>
         <div class="identity">
-          <h1>{{props.User.UserPdeudo}}</h1>
-          <h2>{{props.User.UserName}}</h2>
+          <h1>{{props.user.userPdeudo}}</h1>
+          <h2>{{props.user.userName}}</h2>
         </div>
           <WaterCounter v-if="isGarden" class="water" :droplets="456"/>
         <div v-if="isGarden" class = "infos">
-          <p>Compte crée le {{ User.CreationDate }}</p>
-          <p>Arrosé {{ User.TotalWatering }} fois</p>
-          <p>suivi par {{ User.TotalFollowers }} personnes</p>
-          <p>{{ User.TotalFollowing }} personnes suivs</p>
-          <p>a posté {{ User.TotalPosting }} fois</p>
+          <p>Compte crée le {{ user.creationDate }}</p>
+          <p>Arrosé {{ user.totalWatering }} fois</p>
+          <p>suivi par {{ user.totalFollowers }} personnes</p>
+          <p>{{ user.totalFollowing }} personnes suivs</p>
+          <p>a posté {{ user.totalPosting }} fois</p>
         </div>
         <div class="nav-buttons">
       <div class = "mediumButtons">
