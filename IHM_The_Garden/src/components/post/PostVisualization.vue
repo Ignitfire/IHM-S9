@@ -3,6 +3,7 @@ import TimeCounter from './TimeCounter.vue';
 import WaterCounter from '../WaterCounter.vue';
 import { computed, onBeforeUnmount, onMounted } from 'vue';
 import {gsap} from 'gsap';
+import { useUserStore } from '@/stores/allStores.js';
 
 const props= defineProps({
   content: {
@@ -29,6 +30,14 @@ const props= defineProps({
     type: String,
     required: true
   },
+  userID: {
+    type: Number,
+    required: true
+  }
+});
+
+const userPseudo = computed(() => {
+  return useUserStore().getUserByID(props.userID).pseudo;
 });
 
 const timeLeft = computed(() => {
@@ -56,6 +65,7 @@ onBeforeUnmount(() => {
     <div class="postVisualization">
         <div class="top">
           <TimeCounter :time="timeLeft" class="top-left"></TimeCounter>
+          <p>{{ userPseudo }}</p>
           <WaterCounter :droplets="props.locationWaterCount" class="top-right"></WaterCounter>
         </div>
         <div class="middle">
