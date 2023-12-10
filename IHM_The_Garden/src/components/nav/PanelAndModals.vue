@@ -30,8 +30,9 @@ export default {
         const rect = buttonRefs.value[userID].getBoundingClientRect();
         console.log("rect: ", rect)
         // Définissez la position de la modale
+        const panelRect=document.querySelector('.panel').getBoundingClientRect();
         modalRefs.value[userID].style.top = `${rect.top}px`;
-        modalRefs.value[userID].style.left = `${rect.right+15}px`;
+        modalRefs.value[userID].style.left = `${panelRect.right}px`;
       });
     };
 
