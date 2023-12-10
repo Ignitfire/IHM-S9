@@ -85,13 +85,13 @@ export default {
 
 <template>
     <div v-if="isPanelOpen" class="panel" ref="panelRef">
-      <div v-for="userID in User.Following" :key="userID" class="user-button">
-        <button class="modal-button" @click="openModal(userID)">
+      <div v-for="userID in User.Following" :key="userID" class="user">
+        <button class="user-button" @click="openModal(userID)">
           User{{ userID }}
         </button>
         <div v-if="isModalOpen[userID]" class="modal" :ref="el => { if (el) modalRefs[userID] = el }">
-          <RoutingButton type="thread" size="small" :path="'/thread/User' + userID" @click="closeModalAndPanel(userID)"/>
-          <RoutingButton type="garden" size="small" :path="'/garden/User' + userID" @click="closeModalAndPanel(userID)"/>
+          <RoutingButton class="modal-button" type="thread" :path="'/thread/User' + userID" @click="closeModalAndPanel(userID)"/>
+          <RoutingButton class="modal-button" type="garden" :path="'/garden/User' + userID" @click="closeModalAndPanel(userID)"/>
         </div>
       </div>
     </div>
@@ -99,37 +99,52 @@ export default {
 
 <style scoped>
 .modal {
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: row;
-  top : -0.8rem;
-  right: -6rem; /* Positionne la modale à 50px à droite du bouton */
+  align-items: center;
+  justify-content: space-around;
+  left: +27vw  ; /* Positionne la modale à 50px à droite du bouton */
   background-color:bisque;
+  height: 10vh;
+  width: 8vw;
   /* autres styles */
 }
 .panel{
   position: fixed;
   top: 0;
   left: 15vw;
-  width: 8rem;
-  height: 10rem;
+  width: auto;
+  max-height: 100vh;
+  overflow-y: auto; 
+  /* overflow-x: hidden; */
   background-color: white;
   opacity: 1;
   z-index: 2;
   border: 1px solid black;
   border-radius: 0.5rem;
-  padding: 1rem;
+  padding: 1vw;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
 }
 
+.user{
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
 .user-button {
   position: relative;
+  height: 10vh;
+  width: 10vw;
 }
 
 .modal-button{
-  width: 6rem;
+  width: 100%;
+  margin:5%;
+  height:80%;
 }
 </style>
   

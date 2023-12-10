@@ -41,21 +41,16 @@ const togglePanel = () => {
 
 <template>
   <div class="navbar">
-      <div class="top">
         <div class="highUI">
           <h1 v-if="isLocal && !isGarden" class="threadTitle">Fil Principal</h1>
-
           <img v-if="!isLocal || isGarden" class ="avatar" :src="User.AvatarPicture"/>
-          <ActionButton type="settings" class="settings" size="small"/>
+            <ActionButton type="settings" class="settings"/>
         </div>
         <div class="identity">
           <h1>{{props.User.UserPdeudo}}</h1>
           <h2>{{props.User.UserName}}</h2>
         </div>
-        <div v-if="isGarden" class="lowUI">
-        <div class="water">
-          <WaterCounter :droplets="456"/>
-        </div>
+          <WaterCounter v-if="isGarden" class="water" :droplets="456"/>
         <div class = "infos">
           <p>Compte crée le {{ User.CreationDate }}</p>
           <p>Arrosé {{ User.TotalWatering }} fois</p>
@@ -63,17 +58,15 @@ const togglePanel = () => {
           <p>{{ User.TotalFollowing }} personnes suivs</p>
           <p>a posté {{ User.TotalPosting }} fois</p>
         </div>
-        </div>
-      </div>
       <div class = "mediumButtons">
-        <RoutingButton v-if="isGarden" type="home" size="medium" path="/thread/"/>
-        <RoutingButton v-if="!isGarden" type="home" size="medium" path="/"/>
-
-        <ActionButton type="contacts" size="medium" action="togglePanel" @togglePanel="togglePanel"/>
+        <RoutingButton v-if="isGarden" class="medium-button" type="home" size="medium" path="/thread/"/>
+        <RoutingButton v-if="!isGarden" class="medium-button" type="home" size="medium" path="/"/>
+        <ActionButton class="medium-button" type="contacts" size="medium" action="togglePanel" @togglePanel="togglePanel"/>
       </div>
-      <RoutingButton v-if="isGarden" type="thread" size="big" path="/thread/"/>
-      <RoutingButton v-if="!isGarden" type="garden" size="big" path="/"/>
-    </div>
+
+      <RoutingButton v-if="isGarden" class="big-button" type="thread" size="big" path="/thread/"/>
+      <RoutingButton v-if="!isGarden" class="big-button" type="garden" size="big" path="/"/>
+      </div>
 </template>
 
 <style scoped>
@@ -85,6 +78,7 @@ const togglePanel = () => {
   height: 100vh;
   background-color: transparent;
   justify-content: center;
+  align-items: center;
   position: sticky;
   left:0;
   top:0;
@@ -92,8 +86,8 @@ const togglePanel = () => {
   /* Ajoutez vos styles de navbar ici */
 }
 .highUI {
-  position: absolute;
-  width: 15%;
+  width: 100%;
+  height: 10%;
   top: 0;
   display: flex;
   flex-direction: row;
@@ -102,8 +96,8 @@ const togglePanel = () => {
 }
 
 .avatar{
-  width: 7rem;
-  height: 7rem;
+  width: 5vw;
+  height: 5vw;
   border-radius: 50%;
 }
 
@@ -142,17 +136,21 @@ const togglePanel = () => {
   align-items: center;
   height: 2rem;
 }
-.mediumButtons{
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  height: 5rem;
-}
 .infos{
   border-radius: 10px;
   background-color: lightgoldenrodyellow;
   padding-left: 0.5rem;
   margin: 1rem;
+}
+.mediumButtons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 10vh;
+}
+.medium-button{
+  width: 5vw;
+  height: 5vw;
 }
 
 h1{
@@ -160,9 +158,14 @@ h1{
 }
 h2{
   font-size: 1.2rem;
-
 }
 p{
   font-size: 0.9rem;
+}
+.big-button{
+  position: absolute;
+  bottom: 0;
+  width: 10vw;
+  height: 10vw;
 }
 </style>

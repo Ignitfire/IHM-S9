@@ -6,10 +6,6 @@ const props = defineProps({
     type: String,
     default: "thread"
   },
-  size: {
-    type: String,
-    default: 'small'
-  },
   path: {
     type: String,
     default: '/'
@@ -40,13 +36,11 @@ case 'home': {
 
 
 <template>
-  <div class="button">
   <router-link :to="props.path">
-    <button :class="['button',color, props.size]">
+    <button :class="['button',color]">
       <img v-if="icon" :src="icon" class="button-icon" />
     </button>
   </router-link>
-  </div>
 </template>
 
 <style scoped>
@@ -59,21 +53,8 @@ case 'home': {
   padding: 0.5rem;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
-}
-
-.small{
-  width: 2rem;
-  height: 2rem;
-}
-
-.medium{
-  width: 4rem;
-  height: 4rem;
-}
-
-.big{
-  width: 8rem;
-  height: 8rem;
+  width: 100%;
+  height: 100%;
 }
 
 .green {

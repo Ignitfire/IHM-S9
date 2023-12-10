@@ -6,10 +6,6 @@ const props = defineProps({
     type: String,
     default: "thread"
   },
-  size: {
-    type: String,
-    default: 'small'
-  },
   action: {
     type: String,
     required: true
@@ -62,11 +58,9 @@ const buttonHandler = () => {
 </script>
 
 <template>
-    <div class="button">
-    <button :class="['button',buttonProps.color, props.size]" @click="buttonHandler"> 
+    <button :class="['button',buttonProps.color]" @click="buttonHandler"> 
       <img v-if="buttonProps.icon" :src="buttonProps.icon" class="button-icon" />
     </button>
-  </div>
 </template>
 
 <style scoped>
@@ -81,20 +75,7 @@ const buttonHandler = () => {
   transition: all 0.2s ease-in-out;
 }
 
-.small{
-  width: 2rem;
-  height: 2rem;
-}
 
-.medium{
-  width: 4rem;
-  height: 4rem;
-}
-
-.big{
-  width: 8rem;
-  height: 8rem;
-}
 
 .green {
   background-color: #00FF00;
