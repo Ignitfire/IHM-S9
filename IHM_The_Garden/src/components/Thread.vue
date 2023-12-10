@@ -18,7 +18,7 @@ const postStore = usePostStore();
 const userStore = useUserStore();
 
 const threadPosts = ref(null);
-const localUser = UserStore.getLocalUser();
+const localUser = userStore.getLocalUser();
 const isMainThread = ref(null);
 
 watchEffect(() => {
@@ -131,7 +131,7 @@ onUpdated(() => {
       @post-not-hovered="postVisualizationToggle"
       />
       <div class="post-info">
-      <p>post crée le {{ post.creationDate }} par {{ post.userID }}</p>
+      <!-- <p>post crée le {{ post.creationDate }} par {{ post.userID }}</p> -->
       <p v-if="!isMainThread">Envoyé le {{post.sentDate }} par {{ post.senderID }}</p>
       </div>
     </div>

@@ -5,6 +5,7 @@ import { ref } from 'vue';
 import { watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 import NavBar from '@/components/nav/NavBar.vue';
+import PanelAndModals from '@/components/nav/PanelAndModals.vue';
 
 const route = useRoute();
 const store = useUserStore();

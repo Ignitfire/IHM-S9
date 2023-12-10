@@ -85,7 +85,7 @@ export default {
 
 <template>
     <div v-if="isPanelOpen" class="panel" ref="panelRef">
-      <div v-for="userID in User.Following" :key="userID" class="user">
+      <div v-for="userID in user.following" :key="userID" class="user">
         <button class="user-button" @click="openModal(userID)">
           User{{ userID }}
         </button>
