@@ -16,12 +16,14 @@ const prologue = props.content.substring(0,40)+"...";
 </script>
 
 <template>
-  <div 
+  <div class="tiny-post-container">
+    <div 
   class="post" 
-    @mouseenter="$emit('post-hovered', { postID: props.postID });"
+    @mouseenter="$emit('post-hovered');"
     >
         <p class="text">{{prologue}}</p>
     </div>
+  </div>
 </template>
 
 <style scoped>
@@ -39,8 +41,8 @@ const prologue = props.content.substring(0,40)+"...";
   border-radius: 0.5rem;
   padding: 0.5rem;
   margin: 0.5rem 1rem;
-  height: 20vh; /* Adjust as needed */
-  width: 20vh; /* Adjust as needed */
+  height: 20vh; 
+  width: 20vh; 
 }
 .top-left, .top-right, .bottom-left, .bottom-right {
   position: absolute;

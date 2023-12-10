@@ -9,13 +9,13 @@ const props = defineProps({
   post: {
     type: Object,
     required: true,
-    default: () => ({})
   },
   isMainThread: {
     type: Boolean,
     required: true
   }
 });
+
 
 
 const emit = defineEmits([
@@ -29,42 +29,52 @@ const hovered = ref(false);
 const postVisualizationToggle = () => {
   hovered.value = !hovered.value;
   if (hovered.value) {
-    emit('post-hovered');
+    emit('post-hovered', {
+      postID: props.post.postID,
+    });
   } else {
     emit('post-not-hovered');
   }
 };
 
+const sprinklePost = () => {
+  console.log('sprinklePost');
+};
+
+const sendPost = () => {
+  console.log('sendPost');
+};
 
 </script>
 
 <template>
   <div class="thread-square"
+  @mouseleave="postVisualizationToggle"
   @mouseenter="postVisualizationToggle"
   >
 
     <TinyPost 
+    v-if="!hovered"
       v-bind="post"
-      @post-hovered="postVisualizationToggle"
-      @post-not-hovered="postVisualizationToggle"
       />
       <div class="post-info">
       <p v-if="!isMainThread">Envoyé le {{post.sentDate }} par {{ post.senderID }}</p>
+    </div>
 
       <PostHoverButtons
         v-if="hovered"
-        :type="'garden'"
-        :isLocalUser="isLocalUser"
+        :type="'thread'"
         :userId="post.userID"
-        @deletePost="deletePost"
-        @move="movePost"
         @sprinkle="sprinklePost"
         @send="sendPost"
         />
-      </div>
   </div>
 </template>
 
 <style scoped>
 
+.thread-square {
+  min-width: 25vh;
+  min-height: 25vh;
+}
 </style>

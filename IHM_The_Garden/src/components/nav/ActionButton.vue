@@ -76,9 +76,7 @@ const buttonHandler = () => {
   justify-content: center;
   border: none;
   border-radius: 0.1rem;
-  padding: 0.25vw;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
   width: 100%;
   height: 100%;
   border-radius: 4px;

@@ -1,7 +1,6 @@
 <script setup>
 import { onMounted, onUpdated, ref, watchEffect } from 'vue';
 import { useThreadStore, usePostStore, useUserStore } from '../stores/allStores';
-import TinyPost from './post/TinyPost.vue';
 import PostVisualization from './post/PostVisualization.vue';
 import {gsap} from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -29,10 +28,6 @@ watchEffect(() => {
   else{
     isMainThread.value = false;
   }
-  console.log("isMainThread: ", isMainThread.value);
-  console.log("isTrue: ", props.userID == localUser.userID);
-  console.log("UserID: ", props.userID);
-  console.log("localUser: ", localUser.userID);
   if (!isMainThread.value) {
     // Si UserID est spécifié, threadPosts est égal aux posts présents dans threads
     const threads = threadstore.getThread(localUser.userID, props.userID).sort((a, b) => new Date(a.sentDate) - new Date(b.sentDate));
