@@ -4,7 +4,15 @@ function getRandomDate() {
   const start = new Date(2000, 0, 1);
   const end = new Date();
   const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-  return randomDate;
+  
+  // Formattez la date au format DD/MM/YYYY
+  const formattedDate = randomDate.toLocaleDateString('fr-FR', {
+    day: '2-digit', 
+    month: '2-digit', 
+    year: 'numeric' 
+  });
+
+  return formattedDate;
 }
 function getRandomUserPseudo(){
   const pseudos = ["Superman", "WonderWoman", "IronMan", "BlackWidow", "Spiderman", "Batwoman", "AquaMan", "Catwoman", "Flash", "GreenLantern", "Hulk", "Thor", "CaptainAmerica", "BlackPanther", "Hawkeye", "Falcon", "StarLord", "Groot", "Rocket", "DrStrange"];

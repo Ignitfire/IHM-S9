@@ -11,6 +11,7 @@ const props = defineProps({
     required: true
   }
 });
+
 const postStore = usePostStore();
 
 const visualizedPost = ref(null);

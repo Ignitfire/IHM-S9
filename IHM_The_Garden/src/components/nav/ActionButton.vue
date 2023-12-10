@@ -84,8 +84,6 @@ const buttonHandler = () => {
   border-radius: 4px;
 }
 
-
-
 .green {
   background-color: #00FF00;
 }
@@ -95,6 +93,7 @@ const buttonHandler = () => {
 }
 
 img {
-  height: 60%;
+  max-width: 60%;
+  max-height: 60%;
 }
 </style>
