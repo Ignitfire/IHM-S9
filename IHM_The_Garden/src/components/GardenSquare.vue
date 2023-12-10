@@ -56,7 +56,12 @@ const hovered = ref(false);
 
 const postVisualizationToggle = () => {
   if (hovered.value){
-    emit('post-not-hovered');
+    emit('post-not-hovered', {
+      isLeftSide: isLeftSide.value, 
+      postID: props.post.postID, 
+      gridAreaType: gridAreaType.value, 
+      locationWaterCount: props.waterCount 
+    });
     hovered.value = false;
   }else{
     emit('post-hovered', { 
@@ -127,7 +132,7 @@ const addOrMoveToPost = () => {
         @post-hovered="postVisualizationToggle"
         />
         <PostHoverButtons 
-        v-if="hovered"
+        v-if="!isEmpty && hovered"
         :type="'garden'"
         :isLocalUser="isLocalUser"
         :userId="post.userID"
