@@ -150,6 +150,10 @@ const sprinkle = () => {
   justify-content: center;
   align-items: center;
 }
+.grid-content > * {
+  width: 100%;
+  height: 100%;
+}
 
 .centered{
   grid-column: span 2;

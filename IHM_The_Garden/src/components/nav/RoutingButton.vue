@@ -1,5 +1,4 @@
 <script setup>
-import { computed } from 'vue';
 
 const props = defineProps({
   type: {
@@ -64,7 +63,7 @@ case 'home': {
 }
 
 img {
-  max-width: 90%;
-  max-height: 80%;
+  width: 80%;
+  height: 80%;
 }
 </style>

@@ -82,7 +82,7 @@ const animationZigZag = () => {
     
     tl
       .to(post, {
-        x: (-parentWidth * 0.85)+post.offsetWidth/2,
+        x: (-parentWidth * 0.7)+post.offsetWidth/2,
         ease: "none",
       })
       .to(post, {
@@ -149,6 +149,7 @@ onUpdated(() => {
   display: flex;
   flex-direction: column; 
   align-items: end;
+  padding-right: 20%;
   gap: 1rem;
   width: 100%;
   min-height: 100vh;
