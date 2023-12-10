@@ -63,7 +63,7 @@ const togglePanel = () => {
       <div class = "mediumButtons">
         <RoutingButton v-if="isGarden" class="medium-button" type="home" size="medium" path="/"/>
         <RoutingButton v-if="!isGarden" class="medium-button" type="home" size="medium" path="/thread/"/>
-        <ActionButton class="medium-button" size="medium" action="contacts" @contacts="togglePanel"/>
+        <ActionButton class="medium-button" size="medium" :action="'contacts'" @contacts="togglePanel"/>
       </div>
 
       <RoutingButton v-if="isGarden" class="big-button" type="thread" size="big" path="/thread/"/>

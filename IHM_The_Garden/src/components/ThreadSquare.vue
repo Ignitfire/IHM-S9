@@ -2,6 +2,8 @@
 
 <script setup>
 import TinyPost from './post/TinyPost.vue';
+import PostHoverButtons from './post/PostHoverButtons.vue';
+import { ref } from 'vue';
 
 const props = defineProps({
   post: {
@@ -22,11 +24,24 @@ const emit = defineEmits([
   'send-post', 
 ]);
 
+const hovered = ref(false);
+
+const postVisualizationToggle = () => {
+  hovered.value = !hovered.value;
+  if (hovered.value) {
+    emit('post-hovered');
+  } else {
+    emit('post-not-hovered');
+  }
+};
+
 
 </script>
 
 <template>
-  <div class="thread-square">
+  <div class="thread-square"
+  @mouseenter="postVisualizationToggle"
+  >
 
     <TinyPost 
       v-bind="post"
@@ -36,8 +51,8 @@ const emit = defineEmits([
       <div class="post-info">
       <p v-if="!isMainThread">Envoyé le {{post.sentDate }} par {{ post.senderID }}</p>
 
-      <PostHoverButtons 
-        v-if="!isEmpty && hovered"
+      <PostHoverButtons
+        v-if="hovered"
         :type="'garden'"
         :isLocalUser="isLocalUser"
         :userId="post.userID"
