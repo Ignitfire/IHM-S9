@@ -25,7 +25,7 @@ const createUserStore = () => {
   const userArray = [];
   const user1 = {
     userID: 0,
-    userName: "Jean de la fontaine",
+    userName: "Jean_de_la_fontaine",
     userPseudo: "@JeanDLF",
     following: Array.from({ length: 46 }, (_, index) => index + 3),
     creationDate: getRandomDate(), 
@@ -50,7 +50,7 @@ const createUserStore = () => {
   };
   const user3 = {
     userID: 2,
-    userName: "Paul pas de bol",
+    userName: "Paul_pas_de_bol",
     userPseudo: "@polnobol",
     following: Array.from({ length: 12 }, (_, index) => index),
     creationDate: getRandomDate(), 

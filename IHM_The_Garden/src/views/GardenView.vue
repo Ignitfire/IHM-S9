@@ -41,7 +41,7 @@ const togglePanel = () => {
   <main v-if="user" class="container">
     <NavBar :user="user" :isLocal="isLocal" :isGarden="true" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel" @togglePanel="togglePanel"/>
     <PanelAndModals :user="user" :isPanelOpen="isPanelOpen" :togglePanel="togglePanel"/>
-    <Garden :user="user"/>
+    <Garden :userID="user.userID"/>
     <div class="modal-container" ref="modalContainerRef"></div>
     </main>
 </template>
